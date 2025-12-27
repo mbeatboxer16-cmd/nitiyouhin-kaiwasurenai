@@ -659,11 +659,47 @@
         </div>
     </div>
 
+    <!-- 日用品編集モーダル -->
+    <div id="editItemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="position: relative;">
+                <span class="close-btn" onclick="closeEditModal()">&times;</span>
+                <h2 style="font-size: 22px; margin: 0;">✏️ 日用品を編集</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>品名 *</label>
+                    <input type="text" id="editItemName" placeholder="例: ティッシュペーパー">
+                </div>
+                <div class="form-group">
+                    <label>仕入れ周期（日数） *</label>
+                    <input type="number" id="editItemCycle" placeholder="例: 30" min="1">
+                </div>
+                <div class="form-group">
+                    <label>カテゴリ</label>
+                    <select id="editItemCategory">
+                        <option value="日用品">日用品</option>
+                        <option value="食品">食品</option>
+                        <option value="洗剤">洗剤</option>
+                        <option value="トイレ用品">トイレ用品</option>
+                        <option value="キッチン用品">キッチン用品</option>
+                        <option value="その他">その他</option>
+                    </select>
+                </div>
+                <div style="text-align: center; margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                    <button class="btn btn-primary" onclick="saveEditedItem()">💾 保存</button>
+                    <button class="btn btn-secondary" onclick="closeEditModal()">キャンセル</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // データ構造
         let items = JSON.parse(localStorage.getItem('items')) || [];
         let purchases = JSON.parse(localStorage.getItem('purchases')) || [];
         let selectedItems = new Set(); // 選択された商品のID
+        let editingItemId = null; // 編集中のアイテムID
 
         // 初期化
         document.addEventListener('DOMContentLoaded', function() {
@@ -819,7 +855,10 @@
                     <div class="item">
                         <div class="item-header">
                             <div class="item-name">${item.name}</div>
-                            <button class="btn btn-danger btn-small" onclick="deleteItem(${item.id})">削除</button>
+                            <div style="display: flex; gap: 5px;">
+                                <button class="btn btn-primary btn-small" onclick="openEditModal(${item.id})">✏️ 編集</button>
+                                <button class="btn btn-danger btn-small" onclick="deleteItem(${item.id})">🗑️ 削除</button>
+                            </div>
                         </div>
                         <div class="item-details">
                             <span class="badge badge-info">${item.category}</span>
@@ -831,7 +870,7 @@
                                 次回予定: ${formatDate(latestPurchase.nextPurchaseDate)}
                             </div>
                         ` : `
-                            <div class="item-details" style="color: #dc3545;">
+                            <div class="item-details" style="color: #E89B8A;">
                                 まだ購入記録がありません
                             </div>
                         `}
@@ -1139,6 +1178,61 @@
             if (event.target == modal) {
                 closeShoppingListModal();
             }
+            const editModal = document.getElementById('editItemModal');
+            if (event.target == editModal) {
+                closeEditModal();
+            }
+        }
+
+        // 編集モーダルを開く
+        function openEditModal(itemId) {
+            const item = items.find(i => i.id === itemId);
+            if (!item) return;
+
+            editingItemId = itemId;
+            document.getElementById('editItemName').value = item.name;
+            document.getElementById('editItemCycle').value = item.cycle;
+            document.getElementById('editItemCategory').value = item.category;
+
+            document.getElementById('editItemModal').style.display = 'block';
+        }
+
+        // 編集モーダルを閉じる
+        function closeEditModal() {
+            document.getElementById('editItemModal').style.display = 'none';
+            editingItemId = null;
+        }
+
+        // 編集を保存
+        function saveEditedItem() {
+            const name = document.getElementById('editItemName').value.trim();
+            const cycle = parseInt(document.getElementById('editItemCycle').value);
+            const category = document.getElementById('editItemCategory').value;
+
+            if (!name || !cycle) {
+                alert('品名と仕入れ周期を入力してください');
+                return;
+            }
+
+            const itemIndex = items.findIndex(i => i.id === editingItemId);
+            if (itemIndex === -1) return;
+
+            // アイテムを更新
+            items[itemIndex].name = name;
+            items[itemIndex].cycle = cycle;
+            items[itemIndex].category = category;
+
+            // 購入履歴の商品名も更新
+            purchases.forEach(purchase => {
+                if (purchase.itemId === editingItemId) {
+                    purchase.itemName = name;
+                }
+            });
+
+            saveData();
+            loadData();
+            closeEditModal();
+            alert('日用品を更新しました');
         }
 
         // 購入が必要な商品数を取得
