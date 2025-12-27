@@ -12,8 +12,8 @@
         }
 
         body {
-            font-family: 'Segoe UI', Meiryo, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+            background: linear-gradient(135deg, #D4A574 0%, #C9A88F 100%);
             min-height: 100vh;
             padding: 10px;
         }
@@ -21,33 +21,37 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: #FFF8F0;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(139, 111, 71, 0.3);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
+            background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
+            color: #FFF8F0;
+            padding: 25px;
             text-align: center;
+            border-bottom: 4px solid #D4A574;
         }
 
         .header h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
+            font-size: 26px;
+            margin-bottom: 8px;
+            font-weight: 900;
+            letter-spacing: 1px;
         }
 
         .header .subtitle {
             font-size: 14px;
-            opacity: 0.9;
+            opacity: 0.95;
+            font-weight: 500;
         }
 
         .tabs {
             display: flex;
-            background: #f8f9fa;
-            border-bottom: 2px solid #dee2e6;
+            background: #F5E6D3;
+            border-bottom: 3px solid #D4A574;
             overflow-x: auto;
         }
 
@@ -60,20 +64,88 @@
             background: none;
             font-size: 14px;
             font-weight: bold;
-            color: #6c757d;
+            color: #8B6F47;
             transition: all 0.3s;
             white-space: nowrap;
             min-width: 100px;
+            position: relative;
+        }
+
+        .tab-icon {
+            font-size: 20px;
+        }
+
+        .tab-label {
+            margin-left: 5px;
         }
 
         .tab.active {
-            color: #667eea;
-            background: white;
-            border-bottom: 3px solid #667eea;
+            color: #6B4423;
+            background: #FFF8F0;
+            border-bottom: 4px solid #8B6F47;
         }
 
         .tab:hover {
-            background: #e9ecef;
+            background: #F0DCC8;
+        }
+
+        /* スマホ用 - 下部固定タブ */
+        @media (max-width: 768px) {
+            .tabs {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+                background: #FFF8F0;
+                border-top: 3px solid #D4A574;
+                border-bottom: none;
+                box-shadow: 0 -4px 15px rgba(139, 111, 71, 0.2);
+                padding-bottom: env(safe-area-inset-bottom);
+            }
+
+            .tab {
+                padding: 8px 5px;
+                font-size: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2px;
+                min-width: 60px;
+            }
+
+            .tab-icon {
+                font-size: 24px;
+            }
+
+            .tab-label {
+                margin-left: 0;
+                font-size: 10px;
+            }
+
+            .tab.active {
+                border-bottom: none;
+                border-top: 4px solid #8B6F47;
+                color: #6B4423;
+            }
+
+            .content {
+                padding: 15px;
+                padding-bottom: 85px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            #dashboardBadge {
+                top: 3px !important;
+                right: 3px !important;
+            }
         }
 
         .content {
@@ -89,26 +161,27 @@
         }
 
         .card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
             margin-bottom: 15px;
-            border-left: 4px solid #667eea;
+            border: 3px solid #F5E6D3;
+            box-shadow: 0 4px 10px rgba(139, 111, 71, 0.1);
         }
 
         .card.danger {
-            border-left-color: #dc3545;
-            background: #fff5f5;
+            border-color: #E89B8A;
+            background: #FFF5F5;
         }
 
         .card.warning {
-            border-left-color: #ffc107;
-            background: #fffef5;
+            border-color: #F4C47E;
+            background: #FFFEF5;
         }
 
         .card.success {
-            border-left-color: #28a745;
-            background: #f5fff5;
+            border-color: #A8C99C;
+            background: #F5FFF5;
         }
 
         .form-group {
@@ -117,74 +190,84 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: bold;
-            color: #495057;
+            color: #6B4423;
+            font-size: 14px;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #dee2e6;
-            border-radius: 5px;
+            padding: 12px;
+            border: 3px solid #F5E6D3;
+            border-radius: 12px;
             font-size: 14px;
+            background: white;
+            transition: all 0.3s;
         }
 
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #D4A574;
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
             font-size: 14px;
             font-weight: bold;
             transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .btn-primary {
-            background: #667eea;
+            background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
             color: white;
         }
 
         .btn-primary:hover {
-            background: #5568d3;
+            background: linear-gradient(135deg, #6B4423 0%, #8B6F47 100%);
         }
 
         .btn-success {
-            background: #28a745;
+            background: linear-gradient(135deg, #A8C99C 0%, #8FBC8F 100%);
             color: white;
         }
 
         .btn-success:hover {
-            background: #218838;
+            background: linear-gradient(135deg, #8FBC8F 0%, #7AA874 100%);
         }
 
         .btn-danger {
-            background: #dc3545;
+            background: linear-gradient(135deg, #E89B8A 0%, #DC8B7A 100%);
             color: white;
         }
 
         .btn-danger:hover {
-            background: #c82333;
+            background: linear-gradient(135deg, #DC8B7A 0%, #CC7B6A 100%);
         }
 
         .btn-secondary {
-            background: #6c757d;
+            background: linear-gradient(135deg, #B8A99A 0%, #A89888 100%);
             color: white;
         }
 
         .btn-secondary:hover {
-            background: #5a6268;
+            background: linear-gradient(135deg, #A89888 0%, #988878 100%);
         }
 
         .btn-small {
-            padding: 5px 10px;
+            padding: 6px 12px;
             font-size: 12px;
         }
 
@@ -196,8 +279,14 @@
             background: white;
             padding: 15px;
             margin-bottom: 10px;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
+            border-radius: 15px;
+            border: 2px solid #F5E6D3;
+            transition: all 0.3s;
+        }
+
+        .item:hover {
+            border-color: #D4A574;
+            box-shadow: 0 4px 12px rgba(139, 111, 71, 0.15);
         }
 
         .item-header {
@@ -210,41 +299,41 @@
         .item-name {
             font-size: 16px;
             font-weight: bold;
-            color: #212529;
+            color: #6B4423;
         }
 
         .item-details {
             font-size: 13px;
-            color: #6c757d;
+            color: #8B6F47;
             margin-bottom: 5px;
         }
 
         .badge {
             display: inline-block;
-            padding: 3px 8px;
-            border-radius: 12px;
+            padding: 4px 10px;
+            border-radius: 15px;
             font-size: 11px;
             font-weight: bold;
             margin-right: 5px;
         }
 
         .badge-danger {
-            background: #dc3545;
+            background: #E89B8A;
             color: white;
         }
 
         .badge-warning {
-            background: #ffc107;
-            color: #212529;
+            background: #F4C47E;
+            color: #6B4423;
         }
 
         .badge-success {
-            background: #28a745;
+            background: #A8C99C;
             color: white;
         }
 
         .badge-info {
-            background: #17a2b8;
+            background: #D4A574;
             color: white;
         }
 
@@ -256,28 +345,30 @@
         }
 
         .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
             color: white;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 20px;
             text-align: center;
+            box-shadow: 0 6px 15px rgba(139, 111, 71, 0.3);
         }
 
         .stat-number {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: bold;
         }
 
         .stat-label {
             font-size: 12px;
-            opacity: 0.9;
+            opacity: 0.95;
             margin-top: 5px;
+            font-weight: 600;
         }
 
         .empty-state {
             text-align: center;
             padding: 40px;
-            color: #6c757d;
+            color: #8B6F47;
         }
 
         .empty-state-icon {
@@ -296,52 +387,111 @@
             background: white;
             padding: 12px;
             margin-bottom: 8px;
-            border-radius: 6px;
-            border-left: 3px solid #667eea;
+            border-radius: 12px;
+            border-left: 4px solid #D4A574;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .alert {
-            padding: 12px;
-            border-radius: 6px;
+            padding: 15px;
+            border-radius: 15px;
             margin-bottom: 15px;
             font-size: 14px;
+            font-weight: 600;
         }
 
         .alert-info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border-left: 4px solid #17a2b8;
+            background: #E8F4F8;
+            color: #2C5F7B;
+            border-left: 4px solid #5DADE2;
         }
 
-        @media (max-width: 600px) {
-            .header h1 {
-                font-size: 20px;
-            }
+        /* チェックボックススタイル */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
 
-            .tab {
-                font-size: 12px;
-                padding: 12px 8px;
-                min-width: 80px;
-            }
+        .checkbox-container input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: #8B6F47;
+        }
 
-            .content {
-                padding: 15px;
-            }
+        .checkbox-label {
+            flex: 1;
+            cursor: pointer;
+        }
 
-            .stats {
-                grid-template-columns: 1fr 1fr;
-            }
+        /* スクショ用モーダル */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background: #FFF8F0;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 25px;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 25px 25px 0 0;
+            text-align: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .screenshot-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            border-left: 4px solid #D4A574;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
         }
 
         @media print {
             body {
                 background: white;
             }
-            .tabs, .btn, .data-management {
+            .tabs, .btn, .data-management, .close-btn {
                 display: none !important;
+            }
+            .modal-content {
+                box-shadow: none;
+                margin: 0;
+                max-width: 100%;
             }
         }
     </style>
@@ -349,19 +499,32 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🛒 日用品買い忘れ防止アプリ</h1>
-            <div class="subtitle">買い物をスマートに管理</div>
+            <h1>🛒✨ 日用品買い忘れ防止アプリ</h1>
+            <div class="subtitle">かわいく賢くお買い物管理 ☕</div>
         </div>
 
         <div class="tabs">
             <button class="tab active" onclick="showTab('dashboard')">
-                📊 ダッシュボード
-                <span id="dashboardBadge" class="badge badge-danger" style="display: none; margin-left: 5px;"></span>
+                <span class="tab-icon">🏠</span>
+                <span class="tab-label">ホーム</span>
+                <span id="dashboardBadge" class="badge badge-danger" style="display: none; position: absolute; top: 5px; right: 5px; font-size: 10px; min-width: 18px; height: 18px; padding: 3px; border-radius: 50%;"></span>
             </button>
-            <button class="tab" onclick="showTab('master')">📝 日用品マスター</button>
-            <button class="tab" onclick="showTab('shopping')">🛍️ お買い物登録</button>
-            <button class="tab" onclick="showTab('history')">📋 購入履歴</button>
-            <button class="tab" onclick="showTab('data')">💾 データ管理</button>
+            <button class="tab" onclick="showTab('master')">
+                <span class="tab-icon">📋</span>
+                <span class="tab-label">マスター</span>
+            </button>
+            <button class="tab" onclick="showTab('shopping')">
+                <span class="tab-icon">🛍️</span>
+                <span class="tab-label">購入</span>
+            </button>
+            <button class="tab" onclick="showTab('history')">
+                <span class="tab-icon">📖</span>
+                <span class="tab-label">履歴</span>
+            </button>
+            <button class="tab" onclick="showTab('data')">
+                <span class="tab-icon">⚙️</span>
+                <span class="tab-label">設定</span>
+            </button>
         </div>
 
         <div class="content">
@@ -373,13 +536,19 @@
                     <strong>⚠️ 購入が必要な商品があります！</strong>
                 </div>
                 
-                <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <button class="btn btn-primary" onclick="openShoppingListModal()" style="font-size: 16px; padding: 15px 30px;">
+                        📝 今日の買い物リストを作る
+                    </button>
+                </div>
+                
+                <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: #6B4423;">
                     🔥 今週の買い物リスト
                     <span id="weeklyBadge" class="badge badge-danger" style="display: none; font-size: 14px;"></span>
                 </h3>
                 <div id="shoppingList"></div>
                 
-                <h3 style="margin-bottom: 15px; margin-top: 30px;">✅ 購入済み・余裕あり</h3>
+                <h3 style="margin-bottom: 15px; margin-top: 30px; color: #8B6F47;">✅ 購入済み・余裕あり</h3>
                 <div id="okList"></div>
             </div>
 
@@ -469,10 +638,32 @@
         </div>
     </div>
 
+    <!-- 買い物リストモーダル -->
+    <div id="shoppingListModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="position: relative;">
+                <span class="close-btn" onclick="closeShoppingListModal()">&times;</span>
+                <h2 style="font-size: 22px; margin: 0;">🛒 今日の買い物リスト</h2>
+                <p style="font-size: 13px; margin-top: 8px; opacity: 0.9;">
+                    📅 <span id="modalDate"></span>
+                </p>
+            </div>
+            <div class="modal-body">
+                <div id="selectedItemsList"></div>
+                <div style="text-align: center; margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-success" onclick="captureScreenshot()">📸 スクショ保存</button>
+                    <button class="btn btn-primary" onclick="printShoppingList()">🖨️ 印刷</button>
+                    <button class="btn btn-secondary" onclick="closeShoppingListModal()">閉じる</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // データ構造
         let items = JSON.parse(localStorage.getItem('items')) || [];
         let purchases = JSON.parse(localStorage.getItem('purchases')) || [];
+        let selectedItems = new Set(); // 選択された商品のID
 
         // 初期化
         document.addEventListener('DOMContentLoaded', function() {
@@ -660,11 +851,11 @@
                     <div class="stat-number">${items.length}</div>
                     <div class="stat-label">登録商品数</div>
                 </div>
-                <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div class="stat-card" style="background: linear-gradient(135deg, #E89B8A 0%, #DC8B7A 100%);">
                     <div class="stat-number">${itemsNeedToBuy.urgent}</div>
                     <div class="stat-label">要購入（期限切れ）</div>
                 </div>
-                <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <div class="stat-card" style="background: linear-gradient(135deg, #A8C99C 0%, #8FBC8F 100%);">
                     <div class="stat-number">${itemsNeedToBuy.soon}</div>
                     <div class="stat-label">今週中に購入</div>
                 </div>
@@ -802,28 +993,152 @@
 
                 return `
                     <div class="${cardClass}">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div style="flex: 1;">
-                                <div style="font-weight: bold; font-size: 16px; margin-bottom: 5px;">
-                                    ${badge}
-                                    ${item.name}
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="item_${item.id}" onchange="toggleItemSelection(${item.id})" ${selectedItems.has(item.id) ? 'checked' : ''}>
+                            <label class="checkbox-label" for="item_${item.id}">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: bold; font-size: 16px; margin-bottom: 5px; color: #6B4423;">
+                                            ${badge}
+                                            ${item.name}
+                                        </div>
+                                        <div style="font-size: 13px; color: #8B6F47;">
+                                            <span class="badge badge-info">${item.category}</span>
+                                            ${formatDate(item.nextDate)} (${daysText})
+                                        </div>
+                                    </div>
+                                    <div style="text-align: right; font-size: 24px; font-weight: bold; color: ${
+                                        item.daysLeft < 0 ? '#E89B8A' : 
+                                        item.daysLeft === 0 ? '#E89B8A' :
+                                        item.daysLeft <= 3 ? '#F4C47E' : '#A8C99C'
+                                    };">
+                                        ${item.daysLeft < 0 ? '!' : item.daysLeft}
+                                    </div>
                                 </div>
-                                <div style="font-size: 13px; color: #6c757d;">
-                                    <span class="badge badge-info">${item.category}</span>
-                                    ${formatDate(item.nextDate)} (${daysText})
-                                </div>
-                            </div>
-                            <div style="text-align: right; font-size: 24px; font-weight: bold; color: ${
-                                item.daysLeft < 0 ? '#dc3545' : 
-                                item.daysLeft === 0 ? '#dc3545' :
-                                item.daysLeft <= 3 ? '#ffc107' : '#28a745'
-                            };">
-                                ${item.daysLeft < 0 ? '!' : item.daysLeft}
-                            </div>
+                            </label>
                         </div>
                     </div>
                 `;
             }).join('');
+        }
+
+        // アイテム選択切り替え
+        function toggleItemSelection(itemId) {
+            if (selectedItems.has(itemId)) {
+                selectedItems.delete(itemId);
+            } else {
+                selectedItems.add(itemId);
+            }
+            
+            // モーダルが開いている場合は更新
+            if (document.getElementById('shoppingListModal').style.display === 'block') {
+                updateSelectedItemsList();
+            }
+        }
+
+        // 買い物リストモーダルを開く
+        function openShoppingListModal() {
+            const allItems = generateShoppingList();
+            const weeklyItems = allItems.filter(item => item.daysLeft <= 7);
+            
+            if (weeklyItems.length === 0) {
+                alert('今週購入が必要な商品がありません');
+                return;
+            }
+
+            // デフォルトで全アイテムを選択
+            selectedItems.clear();
+            weeklyItems.forEach(item => selectedItems.add(item.id));
+            
+            // 日付を設定
+            const today = new Date();
+            document.getElementById('modalDate').textContent = 
+                `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
+            
+            // アイテムリストを生成
+            updateSelectedItemsList();
+            
+            // モーダル表示
+            document.getElementById('shoppingListModal').style.display = 'block';
+        }
+
+        // 選択されたアイテムリストを更新
+        function updateSelectedItemsList() {
+            const container = document.getElementById('selectedItemsList');
+            const allItems = generateShoppingList();
+            const selected = allItems.filter(item => selectedItems.has(item.id));
+            
+            if (selected.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📝</div>
+                        <p>ダッシュボードで商品を選択してください</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // カテゴリ別にグループ化
+            const byCategory = {};
+            selected.forEach(item => {
+                if (!byCategory[item.category]) {
+                    byCategory[item.category] = [];
+                }
+                byCategory[item.category].push(item);
+            });
+
+            let html = '';
+            for (const [category, categoryItems] of Object.entries(byCategory)) {
+                html += `
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #8B6F47; margin-bottom: 10px; font-size: 16px;">
+                            📂 ${category} (${categoryItems.length}件)
+                        </h4>
+                        ${categoryItems.map(item => `
+                            <div class="screenshot-item">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <div style="font-weight: bold; font-size: 15px; color: #6B4423; margin-bottom: 3px;">
+                                            ✓ ${item.name}
+                                        </div>
+                                        <div style="font-size: 12px; color: #8B6F47;">
+                                            次回予定: ${formatDate(item.nextDate)}
+                                            ${item.daysLeft < 0 ? `(${Math.abs(item.daysLeft)}日経過)` : 
+                                              item.daysLeft === 0 ? '(今日)' : 
+                                              `(あと${item.daysLeft}日)`}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        // モーダルを閉じる
+        function closeShoppingListModal() {
+            document.getElementById('shoppingListModal').style.display = 'none';
+        }
+
+        // スクショ保存（html2canvasを使わずにシンプルに印刷ダイアログを開く）
+        function captureScreenshot() {
+            alert('📸 スクリーンショット機能\n\nスマホの場合:\n1. このモーダル全体をスクリーンショット\n2. ギャラリーから切り取り\n\nPCの場合:\n「印刷」ボタンでPDF保存できます');
+        }
+
+        // 買い物リスト印刷
+        function printShoppingList() {
+            window.print();
+        }
+
+        // モーダル外クリックで閉じる
+        window.onclick = function(event) {
+            const modal = document.getElementById('shoppingListModal');
+            if (event.target == modal) {
+                closeShoppingListModal();
+            }
         }
 
         // 購入が必要な商品数を取得
