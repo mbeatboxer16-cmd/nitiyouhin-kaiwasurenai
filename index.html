@@ -493,6 +493,13 @@
                 margin: 0;
                 max-width: 100%;
             }
+            /* フリーリスト印刷時は入力フォームを非表示 */
+            #freelist .card:first-child {
+                display: none !important;
+            }
+            #freelist > div:nth-child(2) {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -508,6 +515,10 @@
                 <span class="tab-icon">🏠</span>
                 <span class="tab-label">ホーム</span>
                 <span id="dashboardBadge" class="badge badge-danger" style="display: none; position: absolute; top: 5px; right: 5px; font-size: 10px; min-width: 18px; height: 18px; padding: 3px; border-radius: 50%;"></span>
+            </button>
+            <button class="tab" onclick="showTab('freelist')">
+                <span class="tab-icon">✏️</span>
+                <span class="tab-label">リスト</span>
             </button>
             <button class="tab" onclick="showTab('master')">
                 <span class="tab-icon">📋</span>
@@ -550,6 +561,56 @@
                 
                 <h3 style="margin-bottom: 15px; margin-top: 30px; color: #8B6F47;">✅ 購入済み・余裕あり</h3>
                 <div id="okList"></div>
+            </div>
+
+            <!-- フリー買い物リスト -->
+            <div id="freelist" class="section">
+                <div class="card">
+                    <h3 style="margin-bottom: 15px; color: #6B4423;">✏️ 自由に買い物リストを作成</h3>
+                    <p style="color: #8B6F47; margin-bottom: 15px; font-size: 13px;">
+                        登録商品から選ぶか、自由に入力してリストを作成できます
+                    </p>
+                    
+                    <div class="form-group">
+                        <label>登録商品から選択</label>
+                        <select id="freeListItemSelect" onchange="addFromMaster()">
+                            <option value="">商品を選択...</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; align-items: center; margin: 15px 0; color: #8B6F47;">
+                        <div style="flex: 1; height: 1px; background: #D4A574;"></div>
+                        <span style="margin: 0 10px; font-weight: bold;">または</span>
+                        <div style="flex: 1; height: 1px; background: #D4A574;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>自由入力</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="freeListItemInput" placeholder="商品名を入力..." style="flex: 1;" onkeypress="if(event.key==='Enter') addFreeListItem()">
+                            <select id="freeListCategoryInput" style="width: 150px;">
+                                <option value="日用品">日用品</option>
+                                <option value="食品">食品</option>
+                                <option value="洗剤">洗剤</option>
+                                <option value="トイレ用品">トイレ用品</option>
+                                <option value="キッチン用品">キッチン用品</option>
+                                <option value="その他">その他</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-success" onclick="addFreeListItem()">➕ リストに追加</button>
+                </div>
+
+                <div style="margin-top: 20px; text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="printFreeList()" style="font-size: 16px; padding: 12px 25px;">
+                        📸 スクショ/印刷
+                    </button>
+                    <button class="btn btn-danger" onclick="clearFreeList()">
+                        🗑️ リストをクリア
+                    </button>
+                </div>
+
+                <div id="freeListContainer" style="margin-top: 20px;"></div>
             </div>
 
             <!-- 日用品マスター -->
@@ -700,6 +761,7 @@
         let purchases = JSON.parse(localStorage.getItem('purchases')) || [];
         let selectedItems = new Set(); // 選択された商品のID
         let editingItemId = null; // 編集中のアイテムID
+        let freeList = []; // フリーリストアイテム（一時的、保存しない）
 
         // 初期化
         document.addEventListener('DOMContentLoaded', function() {
@@ -830,7 +892,190 @@
             loadPurchaseSelect();
             loadHistory();
             loadDataStats();
+            loadFreeListSelect();
         }
+
+        // ========== フリーリスト関連 ==========
+        
+        // フリーリストの選択肢を読み込み
+        function loadFreeListSelect() {
+            const select = document.getElementById('freeListItemSelect');
+            select.innerHTML = '<option value="">商品を選択...</option>' + 
+                items.map(item => `<option value="${item.id}">${item.name} (${item.category})</option>`).join('');
+        }
+
+        // 登録商品から追加
+        function addFromMaster() {
+            const select = document.getElementById('freeListItemSelect');
+            const itemId = parseInt(select.value);
+            
+            if (!itemId) return;
+            
+            const item = items.find(i => i.id === itemId);
+            if (!item) return;
+
+            // 既に追加されているかチェック
+            if (freeList.some(fl => fl.name === item.name)) {
+                alert('この商品は既にリストに追加されています');
+                select.value = '';
+                return;
+            }
+
+            freeList.push({
+                id: Date.now(),
+                name: item.name,
+                category: item.category,
+                checked: false
+            });
+
+            select.value = '';
+            renderFreeList();
+        }
+
+        // 自由入力で追加
+        function addFreeListItem() {
+            const input = document.getElementById('freeListItemInput');
+            const categorySelect = document.getElementById('freeListCategoryInput');
+            const name = input.value.trim();
+            const category = categorySelect.value;
+
+            if (!name) {
+                alert('商品名を入力してください');
+                return;
+            }
+
+            // 既に追加されているかチェック
+            if (freeList.some(fl => fl.name === name)) {
+                alert('この商品は既にリストに追加されています');
+                return;
+            }
+
+            freeList.push({
+                id: Date.now(),
+                name: name,
+                category: category,
+                checked: false
+            });
+
+            input.value = '';
+            renderFreeList();
+        }
+
+        // フリーリストを表示
+        function renderFreeList() {
+            const container = document.getElementById('freeListContainer');
+
+            if (freeList.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📝</div>
+                        <p>リストが空です<br>商品を追加してください</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // カテゴリ別にグループ化
+            const byCategory = {};
+            freeList.forEach(item => {
+                if (!byCategory[item.category]) {
+                    byCategory[item.category] = [];
+                }
+                byCategory[item.category].push(item);
+            });
+
+            let html = '<div style="margin-bottom: 15px; text-align: center; font-weight: bold; color: #6B4423; font-size: 18px;">';
+            html += `📅 ${new Date().getFullYear()}年${new Date().getMonth() + 1}月${new Date().getDate()}日の買い物リスト`;
+            html += '</div>';
+
+            for (const [category, categoryItems] of Object.entries(byCategory)) {
+                html += `
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #8B6F47; margin-bottom: 10px; font-size: 16px;">
+                            📂 ${category} (${categoryItems.length}件)
+                        </h4>
+                        ${categoryItems.map(item => `
+                            <div class="card" style="margin-bottom: 8px;">
+                                <div class="checkbox-container">
+                                    <input type="checkbox" id="free_${item.id}" 
+                                           ${item.checked ? 'checked' : ''} 
+                                           onchange="toggleFreeListItem(${item.id})">
+                                    <label class="checkbox-label" for="free_${item.id}" 
+                                           style="${item.checked ? 'text-decoration: line-through; opacity: 0.6;' : ''}">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <div style="flex: 1;">
+                                                <div style="font-weight: bold; font-size: 15px; color: #6B4423;">
+                                                    ${item.name}
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-danger btn-small" 
+                                                    onclick="removeFreeListItem(${item.id}); event.stopPropagation();"
+                                                    style="margin-left: 10px;">
+                                                ✕
+                                            </button>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            html += `
+                <div style="text-align: center; margin-top: 20px; padding: 15px; background: #F5E6D3; border-radius: 15px;">
+                    <div style="font-size: 20px; font-weight: bold; color: #6B4423;">
+                        合計: ${freeList.length}件
+                    </div>
+                    <div style="font-size: 14px; color: #8B6F47; margin-top: 5px;">
+                        完了: ${freeList.filter(i => i.checked).length}件 / 
+                        残り: ${freeList.filter(i => !i.checked).length}件
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // フリーリストアイテムのチェック切り替え
+        function toggleFreeListItem(itemId) {
+            const item = freeList.find(i => i.id === itemId);
+            if (item) {
+                item.checked = !item.checked;
+                renderFreeList();
+            }
+        }
+
+        // フリーリストアイテムを削除
+        function removeFreeListItem(itemId) {
+            freeList = freeList.filter(i => i.id !== itemId);
+            renderFreeList();
+        }
+
+        // フリーリストをクリア
+        function clearFreeList() {
+            if (freeList.length === 0) {
+                alert('リストは既に空です');
+                return;
+            }
+            
+            if (!confirm('リストを全てクリアしますか？')) return;
+            
+            freeList = [];
+            renderFreeList();
+        }
+
+        // フリーリストを印刷
+        function printFreeList() {
+            if (freeList.length === 0) {
+                alert('リストが空です。商品を追加してから印刷してください');
+                return;
+            }
+            window.print();
+        }
+
+        // ========== フリーリスト関連ここまで ==========
+
 
         // マスターリスト表示
         function loadMasterList() {
