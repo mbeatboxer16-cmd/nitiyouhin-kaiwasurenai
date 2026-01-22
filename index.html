@@ -349,6 +349,73 @@
         color: white;
     }
 
+    .filter-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .filter-btn {
+        padding: 10px 20px;
+        border: 2px solid #D4A574;
+        border-radius: 20px;
+        background: white;
+        color: #8B6F47;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 14px;
+        transition: all 0.3s;
+    }
+
+    .filter-btn:hover {
+        background: #F5E6D3;
+    }
+
+    .filter-btn.active {
+        background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
+        color: white;
+        border-color: #8B6F47;
+    }
+
+    .quick-add-section {
+        background: #FFF8F0;
+        border: 2px dashed #D4A574;
+        border-radius: 15px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .quick-add-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .quick-add-item {
+        background: white;
+        border: 2px solid #D4A574;
+        border-radius: 20px;
+        padding: 8px 15px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: bold;
+        color: #6B4423;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .quick-add-item:hover {
+        background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
+        color: white;
+        border-color: #8B6F47;
+        transform: translateY(-2px);
+    }
+
     .stats {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -567,6 +634,19 @@
                     📝 今日の買い物リストを作る
                 </button>
             </div>
+
+            <!-- 店舗フィルター -->
+            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap;">
+                <button class="btn btn-secondary" id="filterAll" onclick="setStoreFilter('all')" style="padding: 10px 20px;">
+                    🏪 すべて
+                </button>
+                <button class="btn btn-secondary" id="filterSuper" onclick="setStoreFilter('スーパー')" style="padding: 10px 20px;">
+                    🛒 スーパー
+                </button>
+                <button class="btn btn-secondary" id="filterDrug" onclick="setStoreFilter('ドラッグストア')" style="padding: 10px 20px;">
+                    💊 ドラッグストア
+                </button>
+            </div>
             
             <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: #6B4423;">
                 🔥 今週の買い物リスト
@@ -580,6 +660,15 @@
 
         <!-- フリー買い物リスト -->
         <div id="freelist" class="section">
+            <!-- クイック追加セクション -->
+            <div class="card" style="background: linear-gradient(135deg, #FFF8F0 0%, #F5E6D3 100%);">
+                <h3 style="margin-bottom: 15px; color: #6B4423;">⚡ クイック追加</h3>
+                <p style="color: #8B6F47; margin-bottom: 15px; font-size: 13px;">
+                    よく買う商品や最近追加した商品をワンクリックで追加
+                </p>
+                <div id="quickAddContainer"></div>
+            </div>
+
             <div class="card">
                 <h3 style="margin-bottom: 15px; color: #6B4423;">✏️ 自由に買い物リストを作成</h3>
                 <p style="color: #8B6F47; margin-bottom: 15px; font-size: 13px;">
@@ -623,11 +712,27 @@
             </div>
 
             <div style="margin-top: 20px; text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-success" onclick="bulkPurchaseRegister()" style="font-size: 16px; padding: 12px 25px;">
+                    ✅ チェック済み商品を購入登録
+                </button>
                 <button class="btn btn-primary" onclick="printFreeList()" style="font-size: 16px; padding: 12px 25px;">
                     📸 スクショ/印刷
                 </button>
                 <button class="btn btn-danger" onclick="clearFreeList()">
                     🗑️ リストをクリア
+                </button>
+            </div>
+
+            <!-- 店舗フィルター -->
+            <div style="display: flex; gap: 10px; justify-content: center; margin: 20px 0; flex-wrap: wrap;">
+                <button class="btn btn-secondary" id="freeFilterAll" onclick="setFreeListStoreFilter('all')" style="padding: 10px 20px;">
+                    🏪 すべて
+                </button>
+                <button class="btn btn-secondary" id="freeFilterSuper" onclick="setFreeListStoreFilter('スーパー')" style="padding: 10px 20px;">
+                    🛒 スーパー
+                </button>
+                <button class="btn btn-secondary" id="freeFilterDrug" onclick="setFreeListStoreFilter('ドラッグストア')" style="padding: 10px 20px;">
+                    💊 ドラッグストア
                 </button>
             </div>
 
@@ -797,6 +902,9 @@
     let selectedItems = new Set(); // 選択された商品のID
     let editingItemId = null; // 編集中のアイテムID
     let freeList = []; // フリーリストアイテム（一時的、保存しない）
+    let currentStoreFilter = 'all'; // 現在の店舗フィルター
+    let quickAddHistory = JSON.parse(localStorage.getItem('quickAddHistory')) || []; // クイック追加履歴
+    let freeListStoreFilter = 'all'; // フリーリストの店舗フィルター
 
     // 初期化
     document.addEventListener('DOMContentLoaded', function() {
@@ -922,7 +1030,134 @@
         localStorage.setItem('purchases', JSON.stringify(purchases));
     }
 
-    // データ読み込み
+    // ========== 店舗フィルター関連 ==========
+
+    // ダッシュボードの店舗フィルター設定
+    function setStoreFilter(filter) {
+        currentStoreFilter = filter;
+        
+        // ボタンの見た目を更新
+        document.getElementById('filterAll').className = 'btn ' + (filter === 'all' ? 'btn-primary' : 'btn-secondary');
+        document.getElementById('filterSuper').className = 'btn ' + (filter === 'スーパー' ? 'btn-success' : 'btn-secondary');
+        document.getElementById('filterDrug').className = 'btn ' + (filter === 'ドラッグストア' ? 'btn-primary' : 'btn-secondary');
+        
+        // リストを再表示
+        loadDashboard();
+    }
+
+    // フリーリストの店舗フィルター設定
+    function setFreeListStoreFilter(filter) {
+        freeListStoreFilter = filter;
+        
+        // ボタンの見た目を更新
+        document.getElementById('freeFilterAll').className = 'btn ' + (filter === 'all' ? 'btn-primary' : 'btn-secondary');
+        document.getElementById('freeFilterSuper').className = 'btn ' + (filter === 'スーパー' ? 'btn-success' : 'btn-secondary');
+        document.getElementById('freeFilterDrug').className = 'btn ' + (filter === 'ドラッグストア' ? 'btn-primary' : 'btn-secondary');
+        
+        // リストを再表示
+        renderFreeList();
+    }
+
+    // ========== 店舗フィルター関連ここまで ==========
+
+    // ========== クイック追加関連 ==========
+
+    // クイック追加リストを表示
+    function loadQuickAdd() {
+        const container = document.getElementById('quickAddContainer');
+        
+        // よく買う商品TOP5（購入回数が多い順）
+        const purchaseCounts = {};
+        purchases.forEach(p => {
+            purchaseCounts[p.itemId] = (purchaseCounts[p.itemId] || 0) + 1;
+        });
+        
+        const frequentItems = items
+            .map(item => ({
+                ...item,
+                purchaseCount: purchaseCounts[item.id] || 0
+            }))
+            .filter(item => item.purchaseCount > 0)
+            .sort((a, b) => b.purchaseCount - a.purchaseCount)
+            .slice(0, 5);
+
+        // 最近追加した商品（直近5件）
+        const recentItems = items
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .slice(0, 5);
+
+        let html = '';
+
+        if (frequentItems.length > 0) {
+            html += '<h4 style="color: #8B6F47; margin-bottom: 10px; font-size: 14px;">🔥 よく買う商品</h4>';
+            html += '<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;">';
+            frequentItems.forEach(item => {
+                const storeBadgeClass = item.store === 'ドラッグストア' ? 'badge-store-drug' : 'badge-store-super';
+                const storeIcon = item.store === 'ドラッグストア' ? '💊' : '🛒';
+                const safeName = (item.name || '').replace(/'/g, "\\'");
+                const safeCategory = (item.category || '').replace(/'/g, "\\'");
+                const safeStore = (item.store || 'スーパー').replace(/'/g, "\\'");
+                html += `
+                    <button class="btn btn-small ${storeBadgeClass}" onclick="quickAddToFreeList('${safeName}', '${safeCategory}', '${safeStore}')" 
+                            style="padding: 8px 12px; font-size: 13px; border-radius: 20px;">
+                        ${storeIcon} ${item.name}
+                    </button>
+                `;
+            });
+            html += '</div>';
+        }
+
+        if (recentItems.length > 0) {
+            html += '<h4 style="color: #8B6F47; margin-bottom: 10px; font-size: 14px;">🆕 最近追加した商品</h4>';
+            html += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
+            recentItems.forEach(item => {
+                const storeBadgeClass = item.store === 'ドラッグストア' ? 'badge-store-drug' : 'badge-store-super';
+                const storeIcon = item.store === 'ドラッグストア' ? '💊' : '🛒';
+                const safeName = (item.name || '').replace(/'/g, "\\'");
+                const safeCategory = (item.category || '').replace(/'/g, "\\'");
+                const safeStore = (item.store || 'スーパー').replace(/'/g, "\\'");
+                html += `
+                    <button class="btn btn-small ${storeBadgeClass}" onclick="quickAddToFreeList('${safeName}', '${safeCategory}', '${safeStore}')" 
+                            style="padding: 8px 12px; font-size: 13px; border-radius: 20px;">
+                        ${storeIcon} ${item.name}
+                    </button>
+                `;
+            });
+            html += '</div>';
+        }
+
+        if (html === '') {
+            html = '<p style="color: #8B6F47; font-size: 13px; text-align: center;">商品を登録・購入するとここに表示されます</p>';
+        }
+
+        container.innerHTML = html;
+    }
+
+    // クイック追加でフリーリストに追加
+    function quickAddToFreeList(name, category, store) {
+        // 既に追加されているかチェック
+        if (freeList.some(fl => fl.name === name)) {
+            alert('この商品は既にリストに追加されています');
+            return;
+        }
+
+        freeList.push({
+            id: Date.now(),
+            name: name,
+            category: category,
+            store: store,
+            checked: false
+        });
+
+        renderFreeList();
+        
+        // 追加したことを視覚的にフィードバック
+        const container = document.getElementById('freeListContainer');
+        container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+
+    // ========== クイック追加関連ここまで ==========
+
     function loadData() {
         loadMasterList();
         loadDashboard();
@@ -930,6 +1165,7 @@
         loadHistory();
         loadDataStats();
         loadFreeListSelect();
+        loadQuickAdd();
     }
 
     // ========== フリーリスト関連 ==========
@@ -1004,6 +1240,21 @@
 
     // フリーリストを表示
     function renderFreeList() {
+        // フィルターボタンの状態を更新
+        const freeFilterAllBtn = document.getElementById('freeFilterAll');
+        const freeFilterSuperBtn = document.getElementById('freeFilterSuper');
+        const freeFilterDrugBtn = document.getElementById('freeFilterDrug');
+        
+        if (freeFilterAllBtn) {
+            freeFilterAllBtn.className = 'btn ' + (freeListStoreFilter === 'all' ? 'btn-primary' : 'btn-secondary');
+        }
+        if (freeFilterSuperBtn) {
+            freeFilterSuperBtn.className = 'btn ' + (freeListStoreFilter === 'スーパー' ? 'btn-success' : 'btn-secondary');
+        }
+        if (freeFilterDrugBtn) {
+            freeFilterDrugBtn.className = 'btn ' + (freeListStoreFilter === 'ドラッグストア' ? 'btn-primary' : 'btn-secondary');
+        }
+        
         const container = document.getElementById('freeListContainer');
 
         if (freeList.length === 0) {
@@ -1016,9 +1267,25 @@
             return;
         }
 
+        // 店舗フィルター適用
+        let filteredList = freeList;
+        if (freeListStoreFilter !== 'all') {
+            filteredList = freeList.filter(item => item.store === freeListStoreFilter);
+        }
+
+        if (filteredList.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📝</div>
+                    <p>${freeListStoreFilter}の商品がリストにありません</p>
+                </div>
+            `;
+            return;
+        }
+
         // カテゴリ別にグループ化
         const byCategory = {};
-        freeList.forEach(item => {
+        filteredList.forEach(item => {
             if (!byCategory[item.category]) {
                 byCategory[item.category] = [];
             }
@@ -1039,6 +1306,9 @@
                         const storeBadgeClass = item.store === 'ドラッグストア' ? 'badge-store-drug' : 'badge-store-super';
                         const storeIcon = item.store === 'ドラッグストア' ? '💊' : '🛒';
                         
+                        // マスターに登録されているかチェック
+                        const isInMaster = items.some(masterItem => masterItem.name === item.name);
+                        
                         return `
                         <div class="card" style="margin-bottom: 8px;">
                             <div class="checkbox-container">
@@ -1051,16 +1321,25 @@
                                         <div style="flex: 1;">
                                             <div style="font-weight: bold; font-size: 15px; color: #6B4423;">
                                                 ${item.name}
+                                                ${!isInMaster ? '<span class="badge badge-warning" style="margin-left: 5px; font-size: 10px;">未登録</span>' : ''}
                                             </div>
                                             <div style="font-size: 12px; margin-top: 3px;">
                                                 <span class="badge ${storeBadgeClass}">${storeIcon} ${item.store || 'スーパー'}</span>
                                             </div>
                                         </div>
-                                        <button class="btn btn-danger btn-small" 
-                                                onclick="removeFreeListItem(${item.id}); event.stopPropagation();"
-                                                style="margin-left: 10px;">
-                                            ✕
-                                        </button>
+                                        <div style="display: flex; gap: 5px; margin-left: 10px;">
+                                            ${!isInMaster ? `
+                                                <button class="btn btn-primary btn-small" 
+                                                        onclick="registerToMaster(${item.id}); event.stopPropagation();"
+                                                        title="マスター登録">
+                                                    ➕
+                                                </button>
+                                            ` : ''}
+                                            <button class="btn btn-danger btn-small" 
+                                                    onclick="removeFreeListItem(${item.id}); event.stopPropagation();">
+                                                ✕
+                                            </button>
+                                        </div>
                                     </div>
                                 </label>
                             </div>
@@ -1073,11 +1352,11 @@
         html += `
             <div style="text-align: center; margin-top: 20px; padding: 15px; background: #F5E6D3; border-radius: 15px;">
                 <div style="font-size: 20px; font-weight: bold; color: #6B4423;">
-                    合計: ${freeList.length}件
+                    ${freeListStoreFilter === 'all' ? '合計' : freeListStoreFilter}: ${filteredList.length}件
                 </div>
                 <div style="font-size: 14px; color: #8B6F47; margin-top: 5px;">
-                    完了: ${freeList.filter(i => i.checked).length}件 / 
-                    残り: ${freeList.filter(i => !i.checked).length}件
+                    完了: ${filteredList.filter(i => i.checked).length}件 / 
+                    残り: ${filteredList.filter(i => !i.checked).length}件
                 </div>
             </div>
         `;
@@ -1111,6 +1390,104 @@
         
         freeList = [];
         renderFreeList();
+    }
+
+    // フリーリスト商品をマスターに登録
+    function registerToMaster(freeListItemId) {
+        const freeItem = freeList.find(i => i.id === freeListItemId);
+        if (!freeItem) return;
+
+        // 既に登録されているかチェック
+        if (items.some(item => item.name === freeItem.name)) {
+            alert('この商品は既にマスターに登録されています');
+            return;
+        }
+
+        // デフォルト周期を設定（ダイアログで入力）
+        const cycleInput = prompt(`「${freeItem.name}」の仕入れ周期（日数）を入力してください`, '30');
+        if (!cycleInput) return;
+
+        const cycle = parseInt(cycleInput);
+        if (isNaN(cycle) || cycle <= 0) {
+            alert('有効な日数を入力してください');
+            return;
+        }
+
+        // マスターに追加
+        const newItem = {
+            id: Date.now(),
+            name: freeItem.name,
+            cycle: cycle,
+            category: freeItem.category,
+            store: freeItem.store || 'スーパー',
+            createdAt: new Date().toISOString()
+        };
+
+        items.push(newItem);
+        saveData();
+        loadData();
+
+        alert(`「${freeItem.name}」をマスターに登録しました！\n周期: ${cycle}日`);
+    }
+
+    // チェック済み商品を一括購入登録
+    function bulkPurchaseRegister() {
+        const checkedItems = freeList.filter(item => item.checked);
+        
+        if (checkedItems.length === 0) {
+            alert('チェックされた商品がありません\n購入した商品にチェック☑️を入れてください');
+            return;
+        }
+
+        // 未登録商品をチェック
+        const unregisteredItems = checkedItems.filter(freeItem => 
+            !items.some(masterItem => masterItem.name === freeItem.name)
+        );
+
+        if (unregisteredItems.length > 0) {
+            const itemNames = unregisteredItems.map(i => i.name).join('、');
+            alert(`以下の商品はマスター未登録です：\n${itemNames}\n\n先に「➕」ボタンでマスター登録してください`);
+            return;
+        }
+
+        // 購入日を入力
+        const today = new Date().toISOString().split('T')[0];
+        const purchaseDateInput = prompt('購入日を入力してください（YYYY-MM-DD形式）', today);
+        if (!purchaseDateInput) return;
+
+        const purchaseDate = purchaseDateInput;
+
+        // 確認
+        if (!confirm(`${checkedItems.length}件の商品を購入登録しますか？\n購入日: ${formatDate(purchaseDate)}`)) {
+            return;
+        }
+
+        // 一括登録
+        let successCount = 0;
+        checkedItems.forEach(freeItem => {
+            const masterItem = items.find(i => i.name === freeItem.name);
+            if (!masterItem) return;
+
+            const purchase = {
+                id: Date.now() + successCount, // IDが重複しないように
+                itemId: masterItem.id,
+                itemName: masterItem.name,
+                purchaseDate: purchaseDate,
+                nextPurchaseDate: calculateNextDate(purchaseDate, masterItem.cycle)
+            };
+
+            purchases.push(purchase);
+            successCount++;
+        });
+
+        saveData();
+        loadData();
+
+        // 登録した商品をフリーリストから削除
+        freeList = freeList.filter(item => !item.checked);
+        renderFreeList();
+
+        alert(`${successCount}件の購入を登録しました！✅`);
     }
 
     // フリーリストを印刷
@@ -1178,6 +1555,21 @@
 
     // ダッシュボード表示
     function loadDashboard() {
+        // フィルターボタンの状態を更新
+        const filterAllBtn = document.getElementById('filterAll');
+        const filterSuperBtn = document.getElementById('filterSuper');
+        const filterDrugBtn = document.getElementById('filterDrug');
+        
+        if (filterAllBtn) {
+            filterAllBtn.className = 'btn ' + (currentStoreFilter === 'all' ? 'btn-primary' : 'btn-secondary');
+        }
+        if (filterSuperBtn) {
+            filterSuperBtn.className = 'btn ' + (currentStoreFilter === 'スーパー' ? 'btn-success' : 'btn-secondary');
+        }
+        if (filterDrugBtn) {
+            filterDrugBtn.className = 'btn ' + (currentStoreFilter === 'ドラッグストア' ? 'btn-primary' : 'btn-secondary');
+        }
+        
         // 統計情報
         const statsContainer = document.getElementById('statsContainer');
         const itemsNeedToBuy = getItemsNeedToBuy();
@@ -1214,18 +1606,32 @@
             document.getElementById('urgentAlert').style.display = 'none';
         }
 
-        // 買い物リスト（1週間以内）
+        // 買い物リスト（1週間以内）- フィルター適用
         const shoppingListContainer = document.getElementById('shoppingList');
         const allItems = generateShoppingList();
-        const weeklyItems = allItems.filter(item => item.daysLeft <= 7);
+        let weeklyItems = allItems.filter(item => item.daysLeft <= 7);
+        
+        // 店舗フィルター適用
+        if (currentStoreFilter !== 'all') {
+            weeklyItems = weeklyItems.filter(item => item.store === currentStoreFilter);
+        }
 
         if (weeklyItems.length === 0) {
-            shoppingListContainer.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-state-icon">✅</div>
-                    <p>今週購入が必要な商品はありません</p>
-                </div>
-            `;
+            if (currentStoreFilter !== 'all') {
+                shoppingListContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">✅</div>
+                        <p>${currentStoreFilter}で購入が必要な商品はありません</p>
+                    </div>
+                `;
+            } else {
+                shoppingListContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">✅</div>
+                        <p>今週購入が必要な商品はありません</p>
+                    </div>
+                `;
+            }
         } else {
             // カテゴリ別にグループ化
             const categories = {
@@ -1272,15 +1678,20 @@
             shoppingListContainer.innerHTML = html;
         }
 
-        // 余裕がある商品リスト
+        // 余裕がある商品リスト - フィルター適用
         const okListContainer = document.getElementById('okList');
-        const okItems = allItems.filter(item => item.daysLeft > 7);
+        let okItems = allItems.filter(item => item.daysLeft > 7);
+        
+        // 店舗フィルター適用
+        if (currentStoreFilter !== 'all') {
+            okItems = okItems.filter(item => item.store === currentStoreFilter);
+        }
         
         if (okItems.length === 0) {
             okListContainer.innerHTML = `
                 <div class="empty-state">
                     <div class="empty-state-icon">📦</div>
-                    <p>全ての商品が1週間以内に購入予定です</p>
+                    <p>該当する商品がありません</p>
                 </div>
             `;
         } else {
