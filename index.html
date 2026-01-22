@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -11,497 +12,510 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
-            background: linear-gradient(135deg, #D4A574 0%, #C9A88F 100%);
-            min-height: 100vh;
-            padding: 10px;
-        }
+```
+    body {
+        font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+        background: linear-gradient(135deg, #D4A574 0%, #C9A88F 100%);
+        min-height: 100vh;
+        padding: 10px;
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #FFF8F0;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(139, 111, 71, 0.3);
-            overflow: hidden;
-        }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #FFF8F0;
+        border-radius: 25px;
+        box-shadow: 0 15px 40px rgba(139, 111, 71, 0.3);
+        overflow: hidden;
+    }
 
-        .header {
-            background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
-            color: #FFF8F0;
-            padding: 25px;
-            text-align: center;
-            border-bottom: 4px solid #D4A574;
-        }
+    .header {
+        background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
+        color: #FFF8F0;
+        padding: 25px;
+        text-align: center;
+        border-bottom: 4px solid #D4A574;
+    }
 
-        .header h1 {
-            font-size: 26px;
-            margin-bottom: 8px;
-            font-weight: 900;
-            letter-spacing: 1px;
-        }
+    .header h1 {
+        font-size: 26px;
+        margin-bottom: 8px;
+        font-weight: 900;
+        letter-spacing: 1px;
+    }
 
-        .header .subtitle {
-            font-size: 14px;
-            opacity: 0.95;
-            font-weight: 500;
-        }
+    .header .subtitle {
+        font-size: 14px;
+        opacity: 0.95;
+        font-weight: 500;
+    }
 
+    .tabs {
+        display: flex;
+        background: #F5E6D3;
+        border-bottom: 3px solid #D4A574;
+        overflow-x: auto;
+    }
+
+    .tab {
+        flex: 1;
+        padding: 15px;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-size: 14px;
+        font-weight: bold;
+        color: #8B6F47;
+        transition: all 0.3s;
+        white-space: nowrap;
+        min-width: 100px;
+        position: relative;
+    }
+
+    .tab-icon {
+        font-size: 20px;
+    }
+
+    .tab-label {
+        margin-left: 5px;
+    }
+
+    .tab.active {
+        color: #6B4423;
+        background: #FFF8F0;
+        border-bottom: 4px solid #8B6F47;
+    }
+
+    .tab:hover {
+        background: #F0DCC8;
+    }
+
+    /* スマホ用 - 下部固定タブ */
+    @media (max-width: 768px) {
         .tabs {
-            display: flex;
-            background: #F5E6D3;
-            border-bottom: 3px solid #D4A574;
-            overflow-x: auto;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: #FFF8F0;
+            border-top: 3px solid #D4A574;
+            border-bottom: none;
+            box-shadow: 0 -4px 15px rgba(139, 111, 71, 0.2);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         .tab {
-            flex: 1;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-size: 14px;
-            font-weight: bold;
-            color: #8B6F47;
-            transition: all 0.3s;
-            white-space: nowrap;
-            min-width: 100px;
-            position: relative;
+            padding: 8px 5px;
+            font-size: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            min-width: 60px;
         }
 
         .tab-icon {
-            font-size: 20px;
+            font-size: 24px;
         }
 
         .tab-label {
-            margin-left: 5px;
+            margin-left: 0;
+            font-size: 10px;
         }
 
         .tab.active {
+            border-bottom: none;
+            border-top: 4px solid #8B6F47;
             color: #6B4423;
-            background: #FFF8F0;
-            border-bottom: 4px solid #8B6F47;
-        }
-
-        .tab:hover {
-            background: #F0DCC8;
-        }
-
-        /* スマホ用 - 下部固定タブ */
-        @media (max-width: 768px) {
-            .tabs {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                z-index: 1000;
-                background: #FFF8F0;
-                border-top: 3px solid #D4A574;
-                border-bottom: none;
-                box-shadow: 0 -4px 15px rgba(139, 111, 71, 0.2);
-                padding-bottom: env(safe-area-inset-bottom);
-            }
-
-            .tab {
-                padding: 8px 5px;
-                font-size: 10px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 2px;
-                min-width: 60px;
-            }
-
-            .tab-icon {
-                font-size: 24px;
-            }
-
-            .tab-label {
-                margin-left: 0;
-                font-size: 10px;
-            }
-
-            .tab.active {
-                border-bottom: none;
-                border-top: 4px solid #8B6F47;
-                color: #6B4423;
-            }
-
-            .content {
-                padding: 15px;
-                padding-bottom: 85px;
-            }
-
-            .header h1 {
-                font-size: 22px;
-            }
-
-            .stats {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            #dashboardBadge {
-                top: 3px !important;
-                right: 3px !important;
-            }
         }
 
         .content {
-            padding: 20px;
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 3px solid #F5E6D3;
-            box-shadow: 0 4px 10px rgba(139, 111, 71, 0.1);
-        }
-
-        .card.danger {
-            border-color: #E89B8A;
-            background: #FFF5F5;
-        }
-
-        .card.warning {
-            border-color: #F4C47E;
-            background: #FFFEF5;
-        }
-
-        .card.success {
-            border-color: #A8C99C;
-            background: #F5FFF5;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #6B4423;
-            font-size: 14px;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 3px solid #F5E6D3;
-            border-radius: 12px;
-            font-size: 14px;
-            background: white;
-            transition: all 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #D4A574;
-            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #6B4423 0%, #8B6F47 100%);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #A8C99C 0%, #8FBC8F 100%);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: linear-gradient(135deg, #8FBC8F 0%, #7AA874 100%);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #E89B8A 0%, #DC8B7A 100%);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: linear-gradient(135deg, #DC8B7A 0%, #CC7B6A 100%);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #B8A99A 0%, #A89888 100%);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: linear-gradient(135deg, #A89888 0%, #988878 100%);
-        }
-
-        .btn-small {
-            padding: 6px 12px;
-            font-size: 12px;
-        }
-
-        .item-list {
-            margin-top: 20px;
-        }
-
-        .item {
-            background: white;
             padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 15px;
-            border: 2px solid #F5E6D3;
-            transition: all 0.3s;
+            padding-bottom: 85px;
         }
 
-        .item:hover {
-            border-color: #D4A574;
-            box-shadow: 0 4px 12px rgba(139, 111, 71, 0.15);
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .item-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #6B4423;
-        }
-
-        .item-details {
-            font-size: 13px;
-            color: #8B6F47;
-            margin-bottom: 5px;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 15px;
-            font-size: 11px;
-            font-weight: bold;
-            margin-right: 5px;
-        }
-
-        .badge-danger {
-            background: #E89B8A;
-            color: white;
-        }
-
-        .badge-warning {
-            background: #F4C47E;
-            color: #6B4423;
-        }
-
-        .badge-success {
-            background: #A8C99C;
-            color: white;
-        }
-
-        .badge-info {
-            background: #D4A574;
-            color: white;
+        .header h1 {
+            font-size: 22px;
         }
 
         .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            grid-template-columns: 1fr 1fr;
         }
 
-        .stat-card {
-            background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 6px 15px rgba(139, 111, 71, 0.3);
+        #dashboardBadge {
+            top: 3px !important;
+            right: 3px !important;
         }
+    }
 
-        .stat-number {
-            font-size: 36px;
-            font-weight: bold;
-        }
+    .content {
+        padding: 20px;
+    }
 
-        .stat-label {
-            font-size: 12px;
-            opacity: 0.95;
-            margin-top: 5px;
-            font-weight: 600;
-        }
+    .section {
+        display: none;
+    }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: #8B6F47;
-        }
+    .section.active {
+        display: block;
+    }
 
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
+    .card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 15px;
+        border: 3px solid #F5E6D3;
+        box-shadow: 0 4px 10px rgba(139, 111, 71, 0.1);
+    }
 
-        .data-management {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
+    .card.danger {
+        border-color: #E89B8A;
+        background: #FFF5F5;
+    }
 
-        .history-item {
+    .card.warning {
+        border-color: #F4C47E;
+        background: #FFFEF5;
+    }
+
+    .card.success {
+        border-color: #A8C99C;
+        background: #F5FFF5;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #6B4423;
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 12px;
+        border: 3px solid #F5E6D3;
+        border-radius: 12px;
+        font-size: 14px;
+        background: white;
+        transition: all 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #D4A574;
+        box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
+    }
+
+    .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: all 0.3s;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .btn:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #6B4423 0%, #8B6F47 100%);
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #A8C99C 0%, #8FBC8F 100%);
+        color: white;
+    }
+
+    .btn-success:hover {
+        background: linear-gradient(135deg, #8FBC8F 0%, #7AA874 100%);
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #E89B8A 0%, #DC8B7A 100%);
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #DC8B7A 0%, #CC7B6A 100%);
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #B8A99A 0%, #A89888 100%);
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background: linear-gradient(135deg, #A89888 0%, #988878 100%);
+    }
+
+    .btn-small {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .item-list {
+        margin-top: 20px;
+    }
+
+    .item {
+        background: white;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 15px;
+        border: 2px solid #F5E6D3;
+        transition: all 0.3s;
+    }
+
+    .item:hover {
+        border-color: #D4A574;
+        box-shadow: 0 4px 12px rgba(139, 111, 71, 0.15);
+    }
+
+    .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .item-name {
+        font-size: 16px;
+        font-weight: bold;
+        color: #6B4423;
+    }
+
+    .item-details {
+        font-size: 13px;
+        color: #8B6F47;
+        margin-bottom: 5px;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 11px;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+    .badge-danger {
+        background: #E89B8A;
+        color: white;
+    }
+
+    .badge-warning {
+        background: #F4C47E;
+        color: #6B4423;
+    }
+
+    .badge-success {
+        background: #A8C99C;
+        color: white;
+    }
+
+    .badge-info {
+        background: #D4A574;
+        color: white;
+    }
+
+    .badge-store-super {
+        background: linear-gradient(135deg, #A8C99C 0%, #8FBC8F 100%);
+        color: white;
+    }
+
+    .badge-store-drug {
+        background: linear-gradient(135deg, #9BB8E8 0%, #7A9FD8 100%);
+        color: white;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 6px 15px rgba(139, 111, 71, 0.3);
+    }
+
+    .stat-number {
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    .stat-label {
+        font-size: 12px;
+        opacity: 0.95;
+        margin-top: 5px;
+        font-weight: 600;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #8B6F47;
+    }
+
+    .empty-state-icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+    }
+
+    .data-management {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 20px;
+    }
+
+    .history-item {
+        background: white;
+        padding: 12px;
+        margin-bottom: 8px;
+        border-radius: 12px;
+        border-left: 4px solid #D4A574;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .alert {
+        padding: 15px;
+        border-radius: 15px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .alert-info {
+        background: #E8F4F8;
+        color: #2C5F7B;
+        border-left: 4px solid #5DADE2;
+    }
+
+    /* チェックボックススタイル */
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        accent-color: #8B6F47;
+    }
+
+    .checkbox-label {
+        flex: 1;
+        cursor: pointer;
+    }
+
+    /* スクショ用モーダル */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        background: #FFF8F0;
+        margin: 5% auto;
+        padding: 0;
+        border-radius: 25px;
+        max-width: 500px;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 25px 25px 0 0;
+        text-align: center;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .screenshot-item {
+        background: white;
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 15px;
+        border-left: 4px solid #D4A574;
+    }
+
+    .close-btn {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        color: white;
+        cursor: pointer;
+    }
+
+    @media print {
+        body {
             background: white;
-            padding: 12px;
-            margin-bottom: 8px;
-            border-radius: 12px;
-            border-left: 4px solid #D4A574;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
-
-        .alert {
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            font-weight: 600;
+        .tabs, .btn, .data-management, .close-btn {
+            display: none !important;
         }
-
-        .alert-info {
-            background: #E8F4F8;
-            color: #2C5F7B;
-            border-left: 4px solid #5DADE2;
-        }
-
-        /* チェックボックススタイル */
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-
-        .checkbox-container input[type="checkbox"] {
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            accent-color: #8B6F47;
-        }
-
-        .checkbox-label {
-            flex: 1;
-            cursor: pointer;
-        }
-
-        /* スクショ用モーダル */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-
         .modal-content {
-            background: #FFF8F0;
-            margin: 5% auto;
-            padding: 0;
-            border-radius: 25px;
-            max-width: 500px;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            box-shadow: none;
+            margin: 0;
+            max-width: 100%;
         }
+        /* フリーリスト印刷時は入力フォームを非表示 */
+        #freelist .card:first-child {
+            display: none !important;
+        }
+        #freelist > div:nth-child(2) {
+            display: none !important;
+        }
+    }
+</style>
+```
 
-        .modal-header {
-            background: linear-gradient(135deg, #8B6F47 0%, #A0826D 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 25px 25px 0 0;
-            text-align: center;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .screenshot-item {
-            background: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 15px;
-            border-left: 4px solid #D4A574;
-        }
-
-        .close-btn {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            font-size: 28px;
-            font-weight: bold;
-            color: white;
-            cursor: pointer;
-        }
-
-        @media print {
-            body {
-                background: white;
-            }
-            .tabs, .btn, .data-management, .close-btn {
-                display: none !important;
-            }
-            .modal-content {
-                box-shadow: none;
-                margin: 0;
-                max-width: 100%;
-            }
-            /* フリーリスト印刷時は入力フォームを非表示 */
-            #freelist .card:first-child {
-                display: none !important;
-            }
-            #freelist > div:nth-child(2) {
-                display: none !important;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -510,124 +524,86 @@
             <div class="subtitle">かわいく賢くお買い物管理 ☕</div>
         </div>
 
-        <div class="tabs">
-            <button class="tab active" onclick="showTab('dashboard')">
-                <span class="tab-icon">🏠</span>
-                <span class="tab-label">ホーム</span>
-                <span id="dashboardBadge" class="badge badge-danger" style="display: none; position: absolute; top: 5px; right: 5px; font-size: 10px; min-width: 18px; height: 18px; padding: 3px; border-radius: 50%;"></span>
-            </button>
-            <button class="tab" onclick="showTab('freelist')">
-                <span class="tab-icon">✏️</span>
-                <span class="tab-label">リスト</span>
-            </button>
-            <button class="tab" onclick="showTab('master')">
-                <span class="tab-icon">📋</span>
-                <span class="tab-label">マスター</span>
-            </button>
-            <button class="tab" onclick="showTab('shopping')">
-                <span class="tab-icon">🛍️</span>
-                <span class="tab-label">購入</span>
-            </button>
-            <button class="tab" onclick="showTab('history')">
-                <span class="tab-icon">📖</span>
-                <span class="tab-label">履歴</span>
-            </button>
-            <button class="tab" onclick="showTab('data')">
-                <span class="tab-icon">⚙️</span>
-                <span class="tab-label">設定</span>
-            </button>
+```
+    <div class="tabs">
+        <button class="tab active" onclick="showTab('dashboard')">
+            <span class="tab-icon">🏠</span>
+            <span class="tab-label">ホーム</span>
+            <span id="dashboardBadge" class="badge badge-danger" style="display: none; position: absolute; top: 5px; right: 5px; font-size: 10px; min-width: 18px; height: 18px; padding: 3px; border-radius: 50%;"></span>
+        </button>
+        <button class="tab" onclick="showTab('freelist')">
+            <span class="tab-icon">✏️</span>
+            <span class="tab-label">リスト</span>
+        </button>
+        <button class="tab" onclick="showTab('master')">
+            <span class="tab-icon">📋</span>
+            <span class="tab-label">マスター</span>
+        </button>
+        <button class="tab" onclick="showTab('shopping')">
+            <span class="tab-icon">🛍️</span>
+            <span class="tab-label">購入</span>
+        </button>
+        <button class="tab" onclick="showTab('history')">
+            <span class="tab-icon">📖</span>
+            <span class="tab-label">履歴</span>
+        </button>
+        <button class="tab" onclick="showTab('data')">
+            <span class="tab-icon">⚙️</span>
+            <span class="tab-label">設定</span>
+        </button>
+    </div>
+
+    <div class="content">
+        <!-- ダッシュボード -->
+        <div id="dashboard" class="section active">
+            <div class="stats" id="statsContainer"></div>
+            
+            <div id="urgentAlert" class="alert" style="display: none; background: #fff3cd; border-left: 4px solid #ffc107; margin-bottom: 20px;">
+                <strong>⚠️ 購入が必要な商品があります！</strong>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button class="btn btn-primary" onclick="openShoppingListModal()" style="font-size: 16px; padding: 15px 30px;">
+                    📝 今日の買い物リストを作る
+                </button>
+            </div>
+            
+            <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: #6B4423;">
+                🔥 今週の買い物リスト
+                <span id="weeklyBadge" class="badge badge-danger" style="display: none; font-size: 14px;"></span>
+            </h3>
+            <div id="shoppingList"></div>
+            
+            <h3 style="margin-bottom: 15px; margin-top: 30px; color: #8B6F47;">✅ 購入済み・余裕あり</h3>
+            <div id="okList"></div>
         </div>
 
-        <div class="content">
-            <!-- ダッシュボード -->
-            <div id="dashboard" class="section active">
-                <div class="stats" id="statsContainer"></div>
+        <!-- フリー買い物リスト -->
+        <div id="freelist" class="section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px; color: #6B4423;">✏️ 自由に買い物リストを作成</h3>
+                <p style="color: #8B6F47; margin-bottom: 15px; font-size: 13px;">
+                    登録商品から選ぶか、自由に入力してリストを作成できます
+                </p>
                 
-                <div id="urgentAlert" class="alert" style="display: none; background: #fff3cd; border-left: 4px solid #ffc107; margin-bottom: 20px;">
-                    <strong>⚠️ 購入が必要な商品があります！</strong>
-                </div>
-                
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <button class="btn btn-primary" onclick="openShoppingListModal()" style="font-size: 16px; padding: 15px 30px;">
-                        📝 今日の買い物リストを作る
-                    </button>
-                </div>
-                
-                <h3 style="margin-bottom: 15px; display: flex; align-items: center; gap: 10px; color: #6B4423;">
-                    🔥 今週の買い物リスト
-                    <span id="weeklyBadge" class="badge badge-danger" style="display: none; font-size: 14px;"></span>
-                </h3>
-                <div id="shoppingList"></div>
-                
-                <h3 style="margin-bottom: 15px; margin-top: 30px; color: #8B6F47;">✅ 購入済み・余裕あり</h3>
-                <div id="okList"></div>
-            </div>
-
-            <!-- フリー買い物リスト -->
-            <div id="freelist" class="section">
-                <div class="card">
-                    <h3 style="margin-bottom: 15px; color: #6B4423;">✏️ 自由に買い物リストを作成</h3>
-                    <p style="color: #8B6F47; margin-bottom: 15px; font-size: 13px;">
-                        登録商品から選ぶか、自由に入力してリストを作成できます
-                    </p>
-                    
-                    <div class="form-group">
-                        <label>登録商品から選択</label>
-                        <select id="freeListItemSelect" onchange="addFromMaster()">
-                            <option value="">商品を選択...</option>
-                        </select>
-                    </div>
-
-                    <div style="display: flex; align-items: center; margin: 15px 0; color: #8B6F47;">
-                        <div style="flex: 1; height: 1px; background: #D4A574;"></div>
-                        <span style="margin: 0 10px; font-weight: bold;">または</span>
-                        <div style="flex: 1; height: 1px; background: #D4A574;"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>自由入力</label>
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="freeListItemInput" placeholder="商品名を入力..." style="flex: 1;" onkeypress="if(event.key==='Enter') addFreeListItem()">
-                            <select id="freeListCategoryInput" style="width: 150px;">
-                                <option value="日用品">日用品</option>
-                                <option value="食品">食品</option>
-                                <option value="洗剤">洗剤</option>
-                                <option value="トイレ用品">トイレ用品</option>
-                                <option value="キッチン用品">キッチン用品</option>
-                                <option value="その他">その他</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button class="btn btn-success" onclick="addFreeListItem()">➕ リストに追加</button>
+                <div class="form-group">
+                    <label>登録商品から選択</label>
+                    <select id="freeListItemSelect" onchange="addFromMaster()">
+                        <option value="">商品を選択...</option>
+                    </select>
                 </div>
 
-                <div style="margin-top: 20px; text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn btn-primary" onclick="printFreeList()" style="font-size: 16px; padding: 12px 25px;">
-                        📸 スクショ/印刷
-                    </button>
-                    <button class="btn btn-danger" onclick="clearFreeList()">
-                        🗑️ リストをクリア
-                    </button>
+                <div style="display: flex; align-items: center; margin: 15px 0; color: #8B6F47;">
+                    <div style="flex: 1; height: 1px; background: #D4A574;"></div>
+                    <span style="margin: 0 10px; font-weight: bold;">または</span>
+                    <div style="flex: 1; height: 1px; background: #D4A574;"></div>
                 </div>
 
-                <div id="freeListContainer" style="margin-top: 20px;"></div>
-            </div>
-
-            <!-- 日用品マスター -->
-            <div id="master" class="section">
-                <div class="card">
-                    <h3 style="margin-bottom: 15px;">新規日用品登録</h3>
-                    <div class="form-group">
-                        <label>品名 *</label>
-                        <input type="text" id="itemName" placeholder="例: ティッシュペーパー">
-                    </div>
-                    <div class="form-group">
-                        <label>仕入れ周期（日数） *</label>
-                        <input type="number" id="itemCycle" placeholder="例: 30" min="1">
-                    </div>
-                    <div class="form-group">
-                        <label>カテゴリ</label>
-                        <select id="itemCategory">
+                <div class="form-group">
+                    <label>自由入力</label>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <input type="text" id="freeListItemInput" placeholder="商品名を入力..." style="flex: 1;" onkeypress="if(event.key==='Enter') addFreeListItem()">
+                        <select id="freeListCategoryInput" style="width: 150px;">
                             <option value="日用品">日用品</option>
                             <option value="食品">食品</option>
                             <option value="洗剤">洗剤</option>
@@ -636,109 +612,43 @@
                             <option value="その他">その他</option>
                         </select>
                     </div>
-                    <button class="btn btn-primary" onclick="addItem()">➕ 登録</button>
-                </div>
-
-                <div class="item-list" id="masterList"></div>
-            </div>
-
-            <!-- お買い物登録 -->
-            <div id="shopping" class="section">
-                <div class="card">
-                    <h3 style="margin-bottom: 15px;">購入記録</h3>
-                    <div class="form-group">
-                        <label>商品選択 *</label>
-                        <select id="purchaseItem">
-                            <option value="">商品を選択してください</option>
+                    <div style="display: flex; gap: 10px;">
+                        <select id="freeListStoreInput" style="flex: 1;">
+                            <option value="スーパー">🛒 スーパー</option>
+                            <option value="ドラッグストア">💊 ドラッグストア</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>購入日 *</label>
-                        <input type="date" id="purchaseDate">
-                    </div>
-                    <button class="btn btn-success" onclick="recordPurchase()">✅ 購入記録</button>
                 </div>
-
-                <div class="alert alert-info" style="margin-top: 20px;">
-                    💡 購入した商品を記録すると、次回購入予定日が自動計算されます
-                </div>
+                <button class="btn btn-success" onclick="addFreeListItem()">➕ リストに追加</button>
             </div>
 
-            <!-- 購入履歴 -->
-            <div id="history" class="section">
-                <h3 style="margin-bottom: 15px;">📜 購入履歴</h3>
-                <div id="historyList"></div>
+            <div style="margin-top: 20px; text-align: center; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="printFreeList()" style="font-size: 16px; padding: 12px 25px;">
+                    📸 スクショ/印刷
+                </button>
+                <button class="btn btn-danger" onclick="clearFreeList()">
+                    🗑️ リストをクリア
+                </button>
             </div>
 
-            <!-- データ管理 -->
-            <div id="data" class="section">
-                <div class="card">
-                    <h3 style="margin-bottom: 15px;">データ管理</h3>
-                    
-                    <h4 style="margin: 15px 0 10px 0;">バックアップ</h4>
-                    <div class="data-management">
-                        <button class="btn btn-primary" onclick="exportData()">📥 データをエクスポート</button>
-                        <button class="btn btn-secondary" onclick="printData()">🖨️ 印刷</button>
-                    </div>
-
-                    <h4 style="margin: 20px 0 10px 0;">データ復元</h4>
-                    <div class="form-group">
-                        <input type="file" id="importFile" accept=".json" style="margin-bottom: 10px;">
-                        <button class="btn btn-success" onclick="importData()">📤 データをインポート</button>
-                    </div>
-
-                    <h4 style="margin: 20px 0 10px 0;">データ削除</h4>
-                    <button class="btn btn-danger" onclick="clearAllData()">🗑️ 全データ削除</button>
-                </div>
-
-                <div class="card" style="margin-top: 20px;">
-                    <h3 style="margin-bottom: 10px;">📊 データ統計</h3>
-                    <div id="dataStats"></div>
-                </div>
-            </div>
+            <div id="freeListContainer" style="margin-top: 20px;"></div>
         </div>
-    </div>
 
-    <!-- 買い物リストモーダル -->
-    <div id="shoppingListModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header" style="position: relative;">
-                <span class="close-btn" onclick="closeShoppingListModal()">&times;</span>
-                <h2 style="font-size: 22px; margin: 0;">🛒 今日の買い物リスト</h2>
-                <p style="font-size: 13px; margin-top: 8px; opacity: 0.9;">
-                    📅 <span id="modalDate"></span>
-                </p>
-            </div>
-            <div class="modal-body">
-                <div id="selectedItemsList"></div>
-                <div style="text-align: center; margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn btn-success" onclick="captureScreenshot()">📸 スクショ保存</button>
-                    <button class="btn btn-primary" onclick="printShoppingList()">🖨️ 印刷</button>
-                    <button class="btn btn-secondary" onclick="closeShoppingListModal()">閉じる</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 日用品編集モーダル -->
-    <div id="editItemModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header" style="position: relative;">
-                <span class="close-btn" onclick="closeEditModal()">&times;</span>
-                <h2 style="font-size: 22px; margin: 0;">✏️ 日用品を編集</h2>
-            </div>
-            <div class="modal-body">
+        <!-- 日用品マスター -->
+        <div id="master" class="section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px;">新規日用品登録</h3>
                 <div class="form-group">
                     <label>品名 *</label>
-                    <input type="text" id="editItemName" placeholder="例: ティッシュペーパー">
+                    <input type="text" id="itemName" placeholder="例: ティッシュペーパー">
                 </div>
                 <div class="form-group">
                     <label>仕入れ周期（日数） *</label>
-                    <input type="number" id="editItemCycle" placeholder="例: 30" min="1">
+                    <input type="number" id="itemCycle" placeholder="例: 30" min="1">
                 </div>
                 <div class="form-group">
                     <label>カテゴリ</label>
-                    <select id="editItemCategory">
+                    <select id="itemCategory">
                         <option value="日用品">日用品</option>
                         <option value="食品">食品</option>
                         <option value="洗剤">洗剤</option>
@@ -747,891 +657,1054 @@
                         <option value="その他">その他</option>
                     </select>
                 </div>
-                <div style="text-align: center; margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
-                    <button class="btn btn-primary" onclick="saveEditedItem()">💾 保存</button>
-                    <button class="btn btn-secondary" onclick="closeEditModal()">キャンセル</button>
+                <div class="form-group">
+                    <label>購入店舗 *</label>
+                    <select id="itemStore">
+                        <option value="スーパー">🛒 スーパー</option>
+                        <option value="ドラッグストア">💊 ドラッグストア</option>
+                    </select>
                 </div>
+                <button class="btn btn-primary" onclick="addItem()">➕ 登録</button>
+            </div>
+
+            <div class="item-list" id="masterList"></div>
+        </div>
+
+        <!-- お買い物登録 -->
+        <div id="shopping" class="section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px;">購入記録</h3>
+                <div class="form-group">
+                    <label>商品選択 *</label>
+                    <select id="purchaseItem">
+                        <option value="">商品を選択してください</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>購入日 *</label>
+                    <input type="date" id="purchaseDate">
+                </div>
+                <button class="btn btn-success" onclick="recordPurchase()">✅ 購入記録</button>
+            </div>
+
+            <div class="alert alert-info" style="margin-top: 20px;">
+                💡 購入した商品を記録すると、次回購入予定日が自動計算されます
+            </div>
+        </div>
+
+        <!-- 購入履歴 -->
+        <div id="history" class="section">
+            <h3 style="margin-bottom: 15px;">📜 購入履歴</h3>
+            <div id="historyList"></div>
+        </div>
+
+        <!-- データ管理 -->
+        <div id="data" class="section">
+            <div class="card">
+                <h3 style="margin-bottom: 15px;">データ管理</h3>
+                
+                <h4 style="margin: 15px 0 10px 0;">バックアップ</h4>
+                <div class="data-management">
+                    <button class="btn btn-primary" onclick="exportData()">📥 データをエクスポート</button>
+                    <button class="btn btn-secondary" onclick="printData()">🖨️ 印刷</button>
+                </div>
+
+                <h4 style="margin: 20px 0 10px 0;">データ復元</h4>
+                <div class="form-group">
+                    <input type="file" id="importFile" accept=".json" style="margin-bottom: 10px;">
+                    <button class="btn btn-success" onclick="importData()">📤 データをインポート</button>
+                </div>
+
+                <h4 style="margin: 20px 0 10px 0;">データ削除</h4>
+                <button class="btn btn-danger" onclick="clearAllData()">🗑️ 全データ削除</button>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+                <h3 style="margin-bottom: 10px;">📊 データ統計</h3>
+                <div id="dataStats"></div>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // データ構造
-        let items = JSON.parse(localStorage.getItem('items')) || [];
-        let purchases = JSON.parse(localStorage.getItem('purchases')) || [];
-        let selectedItems = new Set(); // 選択された商品のID
-        let editingItemId = null; // 編集中のアイテムID
-        let freeList = []; // フリーリストアイテム（一時的、保存しない）
+<!-- 買い物リストモーダル -->
+<div id="shoppingListModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header" style="position: relative;">
+            <span class="close-btn" onclick="closeShoppingListModal()">&times;</span>
+            <h2 style="font-size: 22px; margin: 0;">🛒 今日の買い物リスト</h2>
+            <p style="font-size: 13px; margin-top: 8px; opacity: 0.9;">
+                📅 <span id="modalDate"></span>
+            </p>
+        </div>
+        <div class="modal-body">
+            <div id="selectedItemsList"></div>
+            <div style="text-align: center; margin-top: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-success" onclick="captureScreenshot()">📸 スクショ保存</button>
+                <button class="btn btn-primary" onclick="printShoppingList()">🖨️ 印刷</button>
+                <button class="btn btn-secondary" onclick="closeShoppingListModal()">閉じる</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-        // 初期化
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('purchaseDate').valueAsDate = new Date();
-            loadData();
+<!-- 日用品編集モーダル -->
+<div id="editItemModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header" style="position: relative;">
+            <span class="close-btn" onclick="closeEditModal()">&times;</span>
+            <h2 style="font-size: 22px; margin: 0;">✏️ 日用品を編集</h2>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>品名 *</label>
+                <input type="text" id="editItemName" placeholder="例: ティッシュペーパー">
+            </div>
+            <div class="form-group">
+                <label>仕入れ周期（日数） *</label>
+                <input type="number" id="editItemCycle" placeholder="例: 30" min="1">
+            </div>
+            <div class="form-group">
+                <label>カテゴリ</label>
+                <select id="editItemCategory">
+                    <option value="日用品">日用品</option>
+                    <option value="食品">食品</option>
+                    <option value="洗剤">洗剤</option>
+                    <option value="トイレ用品">トイレ用品</option>
+                    <option value="キッチン用品">キッチン用品</option>
+                    <option value="その他">その他</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>購入店舗 *</label>
+                <select id="editItemStore">
+                    <option value="スーパー">🛒 スーパー</option>
+                    <option value="ドラッグストア">💊 ドラッグストア</option>
+                </select>
+            </div>
+            <div style="text-align: center; margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                <button class="btn btn-primary" onclick="saveEditedItem()">💾 保存</button>
+                <button class="btn btn-secondary" onclick="closeEditModal()">キャンセル</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // データ構造
+    let items = JSON.parse(localStorage.getItem('items')) || [];
+    let purchases = JSON.parse(localStorage.getItem('purchases')) || [];
+    let selectedItems = new Set(); // 選択された商品のID
+    let editingItemId = null; // 編集中のアイテムID
+    let freeList = []; // フリーリストアイテム（一時的、保存しない）
+
+    // 初期化
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('purchaseDate').valueAsDate = new Date();
+        loadData();
+    });
+
+    // タブ切り替え
+    function showTab(tabName) {
+        // 全セクション非表示
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+        
+        // 全タブ非アクティブ
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('active');
         });
 
-        // タブ切り替え
-        function showTab(tabName) {
-            // 全セクション非表示
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // 全タブ非アクティブ
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
+        // 選択されたセクションとタブをアクティブに
+        document.getElementById(tabName).classList.add('active');
+        event.target.classList.add('active');
 
-            // 選択されたセクションとタブをアクティブに
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
+        // データ再読み込み
+        loadData();
+    }
 
-            // データ再読み込み
-            loadData();
+    // 日用品追加
+    function addItem() {
+        const name = document.getElementById('itemName').value.trim();
+        const cycle = parseInt(document.getElementById('itemCycle').value);
+        const category = document.getElementById('itemCategory').value;
+        const store = document.getElementById('itemStore').value;
+
+        if (!name || !cycle) {
+            alert('品名と仕入れ周期を入力してください');
+            return;
         }
 
-        // 日用品追加
-        function addItem() {
-            const name = document.getElementById('itemName').value.trim();
-            const cycle = parseInt(document.getElementById('itemCycle').value);
-            const category = document.getElementById('itemCategory').value;
+        const item = {
+            id: Date.now(),
+            name: name,
+            cycle: cycle,
+            category: category,
+            store: store,
+            createdAt: new Date().toISOString()
+        };
 
-            if (!name || !cycle) {
-                alert('品名と仕入れ周期を入力してください');
-                return;
-            }
-
-            const item = {
-                id: Date.now(),
-                name: name,
-                cycle: cycle,
-                category: category,
-                createdAt: new Date().toISOString()
-            };
-
-            items.push(item);
-            saveData();
-            
-            // フォームクリア
-            document.getElementById('itemName').value = '';
-            document.getElementById('itemCycle').value = '';
-            
-            loadData();
-            alert('日用品を登録しました');
-        }
-
-        // 日用品削除
-        function deleteItem(id) {
-            if (!confirm('この日用品を削除しますか？')) return;
-            
-            items = items.filter(item => item.id !== id);
-            purchases = purchases.filter(purchase => purchase.itemId !== id);
-            saveData();
-            loadData();
-        }
-
-        // 購入記録
-        function recordPurchase() {
-            const itemId = parseInt(document.getElementById('purchaseItem').value);
-            const date = document.getElementById('purchaseDate').value;
-
-            if (!itemId || !date) {
-                alert('商品と購入日を選択してください');
-                return;
-            }
-
-            const item = items.find(i => i.id === itemId);
-            if (!item) return;
-
-            const purchase = {
-                id: Date.now(),
-                itemId: itemId,
-                itemName: item.name,
-                purchaseDate: date,
-                nextPurchaseDate: calculateNextDate(date, item.cycle)
-            };
-
-            purchases.push(purchase);
-            saveData();
-            loadData();
-            
-            alert(`${item.name}の購入を記録しました\n次回購入予定: ${formatDate(purchase.nextPurchaseDate)}`);
-        }
-
-        // 次回購入日計算
-        function calculateNextDate(dateStr, cycle) {
-            const date = new Date(dateStr);
-            date.setDate(date.getDate() + cycle);
-            return date.toISOString().split('T')[0];
-        }
-
-        // 日付フォーマット
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            return `${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
-        }
-
-        // 日数差計算
-        function getDaysDiff(dateStr) {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const targetDate = new Date(dateStr);
-            targetDate.setHours(0, 0, 0, 0);
-            return Math.floor((targetDate - today) / (1000 * 60 * 60 * 24));
-        }
-
-        // データ保存
-        function saveData() {
-            localStorage.setItem('items', JSON.stringify(items));
-            localStorage.setItem('purchases', JSON.stringify(purchases));
-        }
-
-        // データ読み込み
-        function loadData() {
-            loadMasterList();
-            loadDashboard();
-            loadPurchaseSelect();
-            loadHistory();
-            loadDataStats();
-            loadFreeListSelect();
-        }
-
-        // ========== フリーリスト関連 ==========
+        items.push(item);
+        saveData();
         
-        // フリーリストの選択肢を読み込み
-        function loadFreeListSelect() {
-            const select = document.getElementById('freeListItemSelect');
-            select.innerHTML = '<option value="">商品を選択...</option>' + 
-                items.map(item => `<option value="${item.id}">${item.name} (${item.category})</option>`).join('');
+        // フォームクリア
+        document.getElementById('itemName').value = '';
+        document.getElementById('itemCycle').value = '';
+        
+        loadData();
+        alert('日用品を登録しました');
+    }
+
+    // 日用品削除
+    function deleteItem(id) {
+        if (!confirm('この日用品を削除しますか？')) return;
+        
+        items = items.filter(item => item.id !== id);
+        purchases = purchases.filter(purchase => purchase.itemId !== id);
+        saveData();
+        loadData();
+    }
+
+    // 購入記録
+    function recordPurchase() {
+        const itemId = parseInt(document.getElementById('purchaseItem').value);
+        const date = document.getElementById('purchaseDate').value;
+
+        if (!itemId || !date) {
+            alert('商品と購入日を選択してください');
+            return;
         }
 
-        // 登録商品から追加
-        function addFromMaster() {
-            const select = document.getElementById('freeListItemSelect');
-            const itemId = parseInt(select.value);
-            
-            if (!itemId) return;
-            
-            const item = items.find(i => i.id === itemId);
-            if (!item) return;
+        const item = items.find(i => i.id === itemId);
+        if (!item) return;
 
-            // 既に追加されているかチェック
-            if (freeList.some(fl => fl.name === item.name)) {
-                alert('この商品は既にリストに追加されています');
-                select.value = '';
-                return;
-            }
+        const purchase = {
+            id: Date.now(),
+            itemId: itemId,
+            itemName: item.name,
+            purchaseDate: date,
+            nextPurchaseDate: calculateNextDate(date, item.cycle)
+        };
 
-            freeList.push({
-                id: Date.now(),
-                name: item.name,
-                category: item.category,
-                checked: false
-            });
+        purchases.push(purchase);
+        saveData();
+        loadData();
+        
+        alert(`${item.name}の購入を記録しました\n次回購入予定: ${formatDate(purchase.nextPurchaseDate)}`);
+    }
 
+    // 次回購入日計算
+    function calculateNextDate(dateStr, cycle) {
+        const date = new Date(dateStr);
+        date.setDate(date.getDate() + cycle);
+        return date.toISOString().split('T')[0];
+    }
+
+    // 日付フォーマット
+    function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        return `${date.getFullYear()}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
+    }
+
+    // 日数差計算
+    function getDaysDiff(dateStr) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const targetDate = new Date(dateStr);
+        targetDate.setHours(0, 0, 0, 0);
+        return Math.floor((targetDate - today) / (1000 * 60 * 60 * 24));
+    }
+
+    // データ保存
+    function saveData() {
+        localStorage.setItem('items', JSON.stringify(items));
+        localStorage.setItem('purchases', JSON.stringify(purchases));
+    }
+
+    // データ読み込み
+    function loadData() {
+        loadMasterList();
+        loadDashboard();
+        loadPurchaseSelect();
+        loadHistory();
+        loadDataStats();
+        loadFreeListSelect();
+    }
+
+    // ========== フリーリスト関連 ==========
+    
+    // フリーリストの選択肢を読み込み
+    function loadFreeListSelect() {
+        const select = document.getElementById('freeListItemSelect');
+        select.innerHTML = '<option value="">商品を選択...</option>' + 
+            items.map(item => `<option value="${item.id}">${item.name} (${item.category})</option>`).join('');
+    }
+
+    // 登録商品から追加
+    function addFromMaster() {
+        const select = document.getElementById('freeListItemSelect');
+        const itemId = parseInt(select.value);
+        
+        if (!itemId) return;
+        
+        const item = items.find(i => i.id === itemId);
+        if (!item) return;
+
+        // 既に追加されているかチェック
+        if (freeList.some(fl => fl.name === item.name)) {
+            alert('この商品は既にリストに追加されています');
             select.value = '';
-            renderFreeList();
+            return;
         }
 
-        // 自由入力で追加
-        function addFreeListItem() {
-            const input = document.getElementById('freeListItemInput');
-            const categorySelect = document.getElementById('freeListCategoryInput');
-            const name = input.value.trim();
-            const category = categorySelect.value;
+        freeList.push({
+            id: Date.now(),
+            name: item.name,
+            category: item.category,
+            store: item.store || 'スーパー',
+            checked: false
+        });
 
-            if (!name) {
-                alert('商品名を入力してください');
-                return;
-            }
+        select.value = '';
+        renderFreeList();
+    }
 
-            // 既に追加されているかチェック
-            if (freeList.some(fl => fl.name === name)) {
-                alert('この商品は既にリストに追加されています');
-                return;
-            }
+    // 自由入力で追加
+    function addFreeListItem() {
+        const input = document.getElementById('freeListItemInput');
+        const categorySelect = document.getElementById('freeListCategoryInput');
+        const storeSelect = document.getElementById('freeListStoreInput');
+        const name = input.value.trim();
+        const category = categorySelect.value;
+        const store = storeSelect.value;
 
-            freeList.push({
-                id: Date.now(),
-                name: name,
-                category: category,
-                checked: false
-            });
-
-            input.value = '';
-            renderFreeList();
+        if (!name) {
+            alert('商品名を入力してください');
+            return;
         }
 
-        // フリーリストを表示
-        function renderFreeList() {
-            const container = document.getElementById('freeListContainer');
+        // 既に追加されているかチェック
+        if (freeList.some(fl => fl.name === name)) {
+            alert('この商品は既にリストに追加されています');
+            return;
+        }
 
-            if (freeList.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📝</div>
-                        <p>リストが空です<br>商品を追加してください</p>
-                    </div>
-                `;
-                return;
+        freeList.push({
+            id: Date.now(),
+            name: name,
+            category: category,
+            store: store,
+            checked: false
+        });
+
+        input.value = '';
+        renderFreeList();
+    }
+
+    // フリーリストを表示
+    function renderFreeList() {
+        const container = document.getElementById('freeListContainer');
+
+        if (freeList.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📝</div>
+                    <p>リストが空です<br>商品を追加してください</p>
+                </div>
+            `;
+            return;
+        }
+
+        // カテゴリ別にグループ化
+        const byCategory = {};
+        freeList.forEach(item => {
+            if (!byCategory[item.category]) {
+                byCategory[item.category] = [];
             }
+            byCategory[item.category].push(item);
+        });
 
-            // カテゴリ別にグループ化
-            const byCategory = {};
-            freeList.forEach(item => {
-                if (!byCategory[item.category]) {
-                    byCategory[item.category] = [];
-                }
-                byCategory[item.category].push(item);
-            });
+        let html = '<div style="margin-bottom: 15px; text-align: center; font-weight: bold; color: #6B4423; font-size: 18px;">';
+        html += `📅 ${new Date().getFullYear()}年${new Date().getMonth() + 1}月${new Date().getDate()}日の買い物リスト`;
+        html += '</div>';
 
-            let html = '<div style="margin-bottom: 15px; text-align: center; font-weight: bold; color: #6B4423; font-size: 18px;">';
-            html += `📅 ${new Date().getFullYear()}年${new Date().getMonth() + 1}月${new Date().getDate()}日の買い物リスト`;
-            html += '</div>';
-
-            for (const [category, categoryItems] of Object.entries(byCategory)) {
-                html += `
-                    <div style="margin-bottom: 20px;">
-                        <h4 style="color: #8B6F47; margin-bottom: 10px; font-size: 16px;">
-                            📂 ${category} (${categoryItems.length}件)
-                        </h4>
-                        ${categoryItems.map(item => `
-                            <div class="card" style="margin-bottom: 8px;">
-                                <div class="checkbox-container">
-                                    <input type="checkbox" id="free_${item.id}" 
-                                           ${item.checked ? 'checked' : ''} 
-                                           onchange="toggleFreeListItem(${item.id})">
-                                    <label class="checkbox-label" for="free_${item.id}" 
-                                           style="${item.checked ? 'text-decoration: line-through; opacity: 0.6;' : ''}">
-                                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                                            <div style="flex: 1;">
-                                                <div style="font-weight: bold; font-size: 15px; color: #6B4423;">
-                                                    ${item.name}
-                                                </div>
-                                            </div>
-                                            <button class="btn btn-danger btn-small" 
-                                                    onclick="removeFreeListItem(${item.id}); event.stopPropagation();"
-                                                    style="margin-left: 10px;">
-                                                ✕
-                                            </button>
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            }
-
+        for (const [category, categoryItems] of Object.entries(byCategory)) {
             html += `
-                <div style="text-align: center; margin-top: 20px; padding: 15px; background: #F5E6D3; border-radius: 15px;">
-                    <div style="font-size: 20px; font-weight: bold; color: #6B4423;">
-                        合計: ${freeList.length}件
-                    </div>
-                    <div style="font-size: 14px; color: #8B6F47; margin-top: 5px;">
-                        完了: ${freeList.filter(i => i.checked).length}件 / 
-                        残り: ${freeList.filter(i => !i.checked).length}件
-                    </div>
-                </div>
-            `;
-
-            container.innerHTML = html;
-        }
-
-        // フリーリストアイテムのチェック切り替え
-        function toggleFreeListItem(itemId) {
-            const item = freeList.find(i => i.id === itemId);
-            if (item) {
-                item.checked = !item.checked;
-                renderFreeList();
-            }
-        }
-
-        // フリーリストアイテムを削除
-        function removeFreeListItem(itemId) {
-            freeList = freeList.filter(i => i.id !== itemId);
-            renderFreeList();
-        }
-
-        // フリーリストをクリア
-        function clearFreeList() {
-            if (freeList.length === 0) {
-                alert('リストは既に空です');
-                return;
-            }
-            
-            if (!confirm('リストを全てクリアしますか？')) return;
-            
-            freeList = [];
-            renderFreeList();
-        }
-
-        // フリーリストを印刷
-        function printFreeList() {
-            if (freeList.length === 0) {
-                alert('リストが空です。商品を追加してから印刷してください');
-                return;
-            }
-            window.print();
-        }
-
-        // ========== フリーリスト関連ここまで ==========
-
-
-        // マスターリスト表示
-        function loadMasterList() {
-            const container = document.getElementById('masterList');
-            
-            if (items.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📦</div>
-                        <p>日用品が登録されていません</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = items.map(item => {
-                const latestPurchase = purchases
-                    .filter(p => p.itemId === item.id)
-                    .sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate))[0];
-
-                return `
-                    <div class="item">
-                        <div class="item-header">
-                            <div class="item-name">${item.name}</div>
-                            <div style="display: flex; gap: 5px;">
-                                <button class="btn btn-primary btn-small" onclick="openEditModal(${item.id})">✏️ 編集</button>
-                                <button class="btn btn-danger btn-small" onclick="deleteItem(${item.id})">🗑️ 削除</button>
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: #8B6F47; margin-bottom: 10px; font-size: 16px;">
+                        📂 ${category} (${categoryItems.length}件)
+                    </h4>
+                    ${categoryItems.map(item => {
+                        const storeBadgeClass = item.store === 'ドラッグストア' ? 'badge-store-drug' : 'badge-store-super';
+                        const storeIcon = item.store === 'ドラッグストア' ? '💊' : '🛒';
+                        
+                        return `
+                        <div class="card" style="margin-bottom: 8px;">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="free_${item.id}" 
+                                       ${item.checked ? 'checked' : ''} 
+                                       onchange="toggleFreeListItem(${item.id})">
+                                <label class="checkbox-label" for="free_${item.id}" 
+                                       style="${item.checked ? 'text-decoration: line-through; opacity: 0.6;' : ''}">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: bold; font-size: 15px; color: #6B4423;">
+                                                ${item.name}
+                                            </div>
+                                            <div style="font-size: 12px; margin-top: 3px;">
+                                                <span class="badge ${storeBadgeClass}">${storeIcon} ${item.store || 'スーパー'}</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-danger btn-small" 
+                                                onclick="removeFreeListItem(${item.id}); event.stopPropagation();"
+                                                style="margin-left: 10px;">
+                                            ✕
+                                        </button>
+                                    </div>
+                                </label>
                             </div>
                         </div>
+                    `}).join('')}
+                </div>
+            `;
+        }
+
+        html += `
+            <div style="text-align: center; margin-top: 20px; padding: 15px; background: #F5E6D3; border-radius: 15px;">
+                <div style="font-size: 20px; font-weight: bold; color: #6B4423;">
+                    合計: ${freeList.length}件
+                </div>
+                <div style="font-size: 14px; color: #8B6F47; margin-top: 5px;">
+                    完了: ${freeList.filter(i => i.checked).length}件 / 
+                    残り: ${freeList.filter(i => !i.checked).length}件
+                </div>
+            </div>
+        `;
+
+        container.innerHTML = html;
+    }
+
+    // フリーリストアイテムのチェック切り替え
+    function toggleFreeListItem(itemId) {
+        const item = freeList.find(i => i.id === itemId);
+        if (item) {
+            item.checked = !item.checked;
+            renderFreeList();
+        }
+    }
+
+    // フリーリストアイテムを削除
+    function removeFreeListItem(itemId) {
+        freeList = freeList.filter(i => i.id !== itemId);
+        renderFreeList();
+    }
+
+    // フリーリストをクリア
+    function clearFreeList() {
+        if (freeList.length === 0) {
+            alert('リストは既に空です');
+            return;
+        }
+        
+        if (!confirm('リストを全てクリアしますか？')) return;
+        
+        freeList = [];
+        renderFreeList();
+    }
+
+    // フリーリストを印刷
+    function printFreeList() {
+        if (freeList.length === 0) {
+            alert('リストが空です。商品を追加してから印刷してください');
+            return;
+        }
+        window.print();
+    }
+
+    // ========== フリーリスト関連ここまで ==========
+
+
+    // マスターリスト表示
+    function loadMasterList() {
+        const container = document.getElementById('masterList');
+        
+        if (items.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📦</div>
+                    <p>日用品が登録されていません</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = items.map(item => {
+            const latestPurchase = purchases
+                .filter(p => p.itemId === item.id)
+                .sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate))[0];
+            
+            const storeBadgeClass = item.store === 'ドラッグストア' ? 'badge-store-drug' : 'badge-store-super';
+            const storeIcon = item.store === 'ドラッグストア' ? '💊' : '🛒';
+
+            return `
+                <div class="item">
+                    <div class="item-header">
+                        <div class="item-name">${item.name}</div>
+                        <div style="display: flex; gap: 5px;">
+                            <button class="btn btn-primary btn-small" onclick="openEditModal(${item.id})">✏️ 編集</button>
+                            <button class="btn btn-danger btn-small" onclick="deleteItem(${item.id})">🗑️ 削除</button>
+                        </div>
+                    </div>
+                    <div class="item-details">
+                        <span class="badge badge-info">${item.category}</span>
+                        <span class="badge ${storeBadgeClass}">${storeIcon} ${item.store || 'スーパー'}</span>
+                        周期: ${item.cycle}日
+                    </div>
+                    ${latestPurchase ? `
                         <div class="item-details">
-                            <span class="badge badge-info">${item.category}</span>
-                            周期: ${item.cycle}日
+                            最終購入: ${formatDate(latestPurchase.purchaseDate)} | 
+                            次回予定: ${formatDate(latestPurchase.nextPurchaseDate)}
                         </div>
-                        ${latestPurchase ? `
-                            <div class="item-details">
-                                最終購入: ${formatDate(latestPurchase.purchaseDate)} | 
-                                次回予定: ${formatDate(latestPurchase.nextPurchaseDate)}
-                            </div>
-                        ` : `
-                            <div class="item-details" style="color: #E89B8A;">
-                                まだ購入記録がありません
-                            </div>
-                        `}
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // ダッシュボード表示
-        function loadDashboard() {
-            // 統計情報
-            const statsContainer = document.getElementById('statsContainer');
-            const itemsNeedToBuy = getItemsNeedToBuy();
-            
-            statsContainer.innerHTML = `
-                <div class="stat-card">
-                    <div class="stat-number">${items.length}</div>
-                    <div class="stat-label">登録商品数</div>
-                </div>
-                <div class="stat-card" style="background: linear-gradient(135deg, #E89B8A 0%, #DC8B7A 100%);">
-                    <div class="stat-number">${itemsNeedToBuy.urgent}</div>
-                    <div class="stat-label">要購入（期限切れ）</div>
-                </div>
-                <div class="stat-card" style="background: linear-gradient(135deg, #A8C99C 0%, #8FBC8F 100%);">
-                    <div class="stat-number">${itemsNeedToBuy.soon}</div>
-                    <div class="stat-label">今週中に購入</div>
+                    ` : `
+                        <div class="item-details" style="color: #E89B8A;">
+                            まだ購入記録がありません
+                        </div>
+                    `}
                 </div>
             `;
+        }).join('');
+    }
 
-            // 通知バッジ更新
-            const totalNeed = itemsNeedToBuy.urgent + itemsNeedToBuy.soon;
-            const dashboardBadge = document.getElementById('dashboardBadge');
-            const weeklyBadge = document.getElementById('weeklyBadge');
-            
-            if (totalNeed > 0) {
-                dashboardBadge.style.display = 'inline-block';
-                dashboardBadge.textContent = totalNeed;
-                weeklyBadge.style.display = 'inline-block';
-                weeklyBadge.textContent = `${totalNeed}件`;
-                document.getElementById('urgentAlert').style.display = 'block';
-            } else {
-                dashboardBadge.style.display = 'none';
-                weeklyBadge.style.display = 'none';
-                document.getElementById('urgentAlert').style.display = 'none';
-            }
+    // ダッシュボード表示
+    function loadDashboard() {
+        // 統計情報
+        const statsContainer = document.getElementById('statsContainer');
+        const itemsNeedToBuy = getItemsNeedToBuy();
+        
+        statsContainer.innerHTML = `
+            <div class="stat-card">
+                <div class="stat-number">${items.length}</div>
+                <div class="stat-label">登録商品数</div>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #E89B8A 0%, #DC8B7A 100%);">
+                <div class="stat-number">${itemsNeedToBuy.urgent}</div>
+                <div class="stat-label">要購入（期限切れ）</div>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #A8C99C 0%, #8FBC8F 100%);">
+                <div class="stat-number">${itemsNeedToBuy.soon}</div>
+                <div class="stat-label">今週中に購入</div>
+            </div>
+        `;
 
-            // 買い物リスト（1週間以内）
-            const shoppingListContainer = document.getElementById('shoppingList');
-            const allItems = generateShoppingList();
-            const weeklyItems = allItems.filter(item => item.daysLeft <= 7);
-
-            if (weeklyItems.length === 0) {
-                shoppingListContainer.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">✅</div>
-                        <p>今週購入が必要な商品はありません</p>
-                    </div>
-                `;
-            } else {
-                // カテゴリ別にグループ化
-                const categories = {
-                    expired: weeklyItems.filter(item => item.daysLeft < 0),
-                    today: weeklyItems.filter(item => item.daysLeft === 0),
-                    threeDays: weeklyItems.filter(item => item.daysLeft > 0 && item.daysLeft <= 3),
-                    week: weeklyItems.filter(item => item.daysLeft > 3 && item.daysLeft <= 7)
-                };
-
-                let html = '';
-
-                // 期限切れ
-                if (categories.expired.length > 0) {
-                    html += `<div style="margin-bottom: 20px;">
-                        <h4 style="color: #dc3545; margin-bottom: 10px;">🚨 期限切れ（${categories.expired.length}件）</h4>
-                        ${renderItems(categories.expired, 'danger')}
-                    </div>`;
-                }
-
-                // 今日
-                if (categories.today.length > 0) {
-                    html += `<div style="margin-bottom: 20px;">
-                        <h4 style="color: #ff6b6b; margin-bottom: 10px;">📍 今日が期限（${categories.today.length}件）</h4>
-                        ${renderItems(categories.today, 'danger')}
-                    </div>`;
-                }
-
-                // 3日以内
-                if (categories.threeDays.length > 0) {
-                    html += `<div style="margin-bottom: 20px;">
-                        <h4 style="color: #ffc107; margin-bottom: 10px;">⚡ 3日以内（${categories.threeDays.length}件）</h4>
-                        ${renderItems(categories.threeDays, 'warning')}
-                    </div>`;
-                }
-
-                // 1週間以内
-                if (categories.week.length > 0) {
-                    html += `<div style="margin-bottom: 20px;">
-                        <h4 style="color: #28a745; margin-bottom: 10px;">📅 今週中（${categories.week.length}件）</h4>
-                        ${renderItems(categories.week, 'success')}
-                    </div>`;
-                }
-
-                shoppingListContainer.innerHTML = html;
-            }
-
-            // 余裕がある商品リスト
-            const okListContainer = document.getElementById('okList');
-            const okItems = allItems.filter(item => item.daysLeft > 7);
-            
-            if (okItems.length === 0) {
-                okListContainer.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📦</div>
-                        <p>全ての商品が1週間以内に購入予定です</p>
-                    </div>
-                `;
-            } else {
-                okListContainer.innerHTML = okItems.map(item => `
-                    <div class="item" style="opacity: 0.7;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-weight: bold; font-size: 14px;">
-                                    ${item.name}
-                                    <span class="badge badge-info">${item.category}</span>
-                                </div>
-                                <div style="font-size: 12px; color: #6c757d; margin-top: 3px;">
-                                    次回購入予定: ${formatDate(item.nextDate)} (あと${item.daysLeft}日)
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
+        // 通知バッジ更新
+        const totalNeed = itemsNeedToBuy.urgent + itemsNeedToBuy.soon;
+        const dashboardBadge = document.getElementById('dashboardBadge');
+        const weeklyBadge = document.getElementById('weeklyBadge');
+        
+        if (totalNeed > 0) {
+            dashboardBadge.style.display = 'inline-block';
+            dashboardBadge.textContent = totalNeed;
+            weeklyBadge.style.display = 'inline-block';
+            weeklyBadge.textContent = `${totalNeed}件`;
+            document.getElementById('urgentAlert').style.display = 'block';
+        } else {
+            dashboardBadge.style.display = 'none';
+            weeklyBadge.style.display = 'none';
+            document.getElementById('urgentAlert').style.display = 'none';
         }
 
-        // アイテム表示用ヘルパー関数
-        function renderItems(items, type) {
-            return items.map(item => {
-                let cardClass = 'card';
-                let badge = '';
-                let daysText = '';
-                
-                if (item.daysLeft < 0) {
-                    cardClass = 'card danger';
-                    badge = '<span class="badge badge-danger">期限切れ</span>';
-                    daysText = `${Math.abs(item.daysLeft)}日経過`;
-                } else if (item.daysLeft === 0) {
-                    cardClass = 'card danger';
-                    badge = '<span class="badge badge-danger">今日</span>';
-                    daysText = '今日が期限';
-                } else if (item.daysLeft <= 3) {
-                    cardClass = 'card warning';
-                    badge = '<span class="badge badge-warning">要注意</span>';
-                    daysText = `あと${item.daysLeft}日`;
-                } else if (item.daysLeft <= 7) {
-                    cardClass = 'card success';
-                    badge = '<span class="badge badge-success">今週中</span>';
-                    daysText = `あと${item.daysLeft}日`;
-                }
+        // 買い物リスト（1週間以内）
+        const shoppingListContainer = document.getElementById('shoppingList');
+        const allItems = generateShoppingList();
+        const weeklyItems = allItems.filter(item => item.daysLeft <= 7);
 
-                return `
-                    <div class="${cardClass}">
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="item_${item.id}" onchange="toggleItemSelection(${item.id})" ${selectedItems.has(item.id) ? 'checked' : ''}>
-                            <label class="checkbox-label" for="item_${item.id}">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <div style="flex: 1;">
-                                        <div style="font-weight: bold; font-size: 16px; margin-bottom: 5px; color: #6B4423;">
-                                            ${badge}
-                                            ${item.name}
-                                        </div>
-                                        <div style="font-size: 13px; color: #8B6F47;">
-                                            <span class="badge badge-info">${item.category}</span>
-                                            ${formatDate(item.nextDate)} (${daysText})
-                                        </div>
-                                    </div>
-                                    <div style="text-align: right; font-size: 24px; font-weight: bold; color: ${
-                                        item.daysLeft < 0 ? '#E89B8A' : 
-                                        item.daysLeft === 0 ? '#E89B8A' :
-                                        item.daysLeft <= 3 ? '#F4C47E' : '#A8C99C'
-                                    };">
-                                        ${item.daysLeft < 0 ? '!' : item.daysLeft}
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // アイテム選択切り替え
-        function toggleItemSelection(itemId) {
-            if (selectedItems.has(itemId)) {
-                selectedItems.delete(itemId);
-            } else {
-                selectedItems.add(itemId);
-            }
-            
-            // モーダルが開いている場合は更新
-            if (document.getElementById('shoppingListModal').style.display === 'block') {
-                updateSelectedItemsList();
-            }
-        }
-
-        // 買い物リストモーダルを開く
-        function openShoppingListModal() {
-            const allItems = generateShoppingList();
-            const weeklyItems = allItems.filter(item => item.daysLeft <= 7);
-            
-            if (weeklyItems.length === 0) {
-                alert('今週購入が必要な商品がありません');
-                return;
-            }
-
-            // デフォルトで全アイテムを選択
-            selectedItems.clear();
-            weeklyItems.forEach(item => selectedItems.add(item.id));
-            
-            // 日付を設定
-            const today = new Date();
-            document.getElementById('modalDate').textContent = 
-                `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
-            
-            // アイテムリストを生成
-            updateSelectedItemsList();
-            
-            // モーダル表示
-            document.getElementById('shoppingListModal').style.display = 'block';
-        }
-
-        // 選択されたアイテムリストを更新
-        function updateSelectedItemsList() {
-            const container = document.getElementById('selectedItemsList');
-            const allItems = generateShoppingList();
-            const selected = allItems.filter(item => selectedItems.has(item.id));
-            
-            if (selected.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📝</div>
-                        <p>ダッシュボードで商品を選択してください</p>
-                    </div>
-                `;
-                return;
-            }
-
+        if (weeklyItems.length === 0) {
+            shoppingListContainer.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">✅</div>
+                    <p>今週購入が必要な商品はありません</p>
+                </div>
+            `;
+        } else {
             // カテゴリ別にグループ化
-            const byCategory = {};
-            selected.forEach(item => {
-                if (!byCategory[item.category]) {
-                    byCategory[item.category] = [];
-                }
-                byCategory[item.category].push(item);
-            });
+            const categories = {
+                expired: weeklyItems.filter(item => item.daysLeft < 0),
+                today: weeklyItems.filter(item => item.daysLeft === 0),
+                threeDays: weeklyItems.filter(item => item.daysLeft > 0 && item.daysLeft <= 3),
+                week: weeklyItems.filter(item => item.daysLeft > 3 && item.daysLeft <= 7)
+            };
 
             let html = '';
-            for (const [category, categoryItems] of Object.entries(byCategory)) {
-                html += `
-                    <div style="margin-bottom: 20px;">
-                        <h4 style="color: #8B6F47; margin-bottom: 10px; font-size: 16px;">
-                            📂 ${category} (${categoryItems.length}件)
-                        </h4>
-                        ${categoryItems.map(item => `
-                            <div class="screenshot-item">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <div style="font-weight: bold; font-size: 15px; color: #6B4423; margin-bottom: 3px;">
-                                            ✓ ${item.name}
-                                        </div>
-                                        <div style="font-size: 12px; color: #8B6F47;">
-                                            次回予定: ${formatDate(item.nextDate)}
-                                            ${item.daysLeft < 0 ? `(${Math.abs(item.daysLeft)}日経過)` : 
-                                              item.daysLeft === 0 ? '(今日)' : 
-                                              `(あと${item.daysLeft}日)`}
-                                        </div>
-                                    </div>
-                                </div>
+
+            // 期限切れ
+            if (categories.expired.length > 0) {
+                html += `<div style="margin-bottom: 20px;">
+                    <h4 style="color: #dc3545; margin-bottom: 10px;">🚨 期限切れ（${categories.expired.length}件）</h4>
+                    ${renderItems(categories.expired, 'danger')}
+                </div>`;
+            }
+
+            // 今日
+            if (categories.today.length > 0) {
+                html += `<div style="margin-bottom: 20px;">
+                    <h4 style="color: #ff6b6b; margin-bottom: 10px;">📍 今日が期限（${categories.today.length}件）</h4>
+                    ${renderItems(categories.today, 'danger')}
+                </div>`;
+            }
+
+            // 3日以内
+            if (categories.threeDays.length > 0) {
+                html += `<div style="margin-bottom: 20px;">
+                    <h4 style="color: #ffc107; margin-bottom: 10px;">⚡ 3日以内（${categories.threeDays.length}件）</h4>
+                    ${renderItems(categories.threeDays, 'warning')}
+                </div>`;
+            }
+
+            // 1週間以内
+            if (categories.week.length > 0) {
+                html += `<div style="margin-bottom: 20px;">
+                    <h4 style="color: #28a745; margin-bottom: 10px;">📅 今週中（${categories.week.length}件）</h4>
+                    ${renderItems(categories.week, 'success')}
+                </div>`;
+            }
+
+            shoppingListContainer.innerHTML = html;
+        }
+
+        // 余裕がある商品リスト
+        const okListContainer = document.getElementById('okList');
+        const okItems = allItems.filter(item => item.daysLeft > 7);
+        
+        if (okItems.length === 0) {
+            okListContainer.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📦</div>
+                    <p>全ての商品が1週間以内に購入予定です</p>
+                </div>
+            `;
+        } else {
+            okListContainer.innerHTML = okItems.map(item => {
+                const storeBadgeClass = item.store === 'ドラッグストア' ? 'badge-store-drug' : 'badge-store-super';
+                const storeIcon = item.store === 'ドラッグストア' ? '💊' : '🛒';
+                
+                return `
+                <div class="item" style="opacity: 0.7;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: bold; font-size: 14px;">
+                                ${item.name}
+                                <span class="badge badge-info">${item.category}</span>
+                                <span class="badge ${storeBadgeClass}">${storeIcon} ${item.store}</span>
                             </div>
-                        `).join('')}
-                    </div>
-                `;
-            }
-
-            container.innerHTML = html;
-        }
-
-        // モーダルを閉じる
-        function closeShoppingListModal() {
-            document.getElementById('shoppingListModal').style.display = 'none';
-        }
-
-        // スクショ保存（html2canvasを使わずにシンプルに印刷ダイアログを開く）
-        function captureScreenshot() {
-            alert('📸 スクリーンショット機能\n\nスマホの場合:\n1. このモーダル全体をスクリーンショット\n2. ギャラリーから切り取り\n\nPCの場合:\n「印刷」ボタンでPDF保存できます');
-        }
-
-        // 買い物リスト印刷
-        function printShoppingList() {
-            window.print();
-        }
-
-        // モーダル外クリックで閉じる
-        window.onclick = function(event) {
-            const modal = document.getElementById('shoppingListModal');
-            if (event.target == modal) {
-                closeShoppingListModal();
-            }
-            const editModal = document.getElementById('editItemModal');
-            if (event.target == editModal) {
-                closeEditModal();
-            }
-        }
-
-        // 編集モーダルを開く
-        function openEditModal(itemId) {
-            const item = items.find(i => i.id === itemId);
-            if (!item) return;
-
-            editingItemId = itemId;
-            document.getElementById('editItemName').value = item.name;
-            document.getElementById('editItemCycle').value = item.cycle;
-            document.getElementById('editItemCategory').value = item.category;
-
-            document.getElementById('editItemModal').style.display = 'block';
-        }
-
-        // 編集モーダルを閉じる
-        function closeEditModal() {
-            document.getElementById('editItemModal').style.display = 'none';
-            editingItemId = null;
-        }
-
-        // 編集を保存
-        function saveEditedItem() {
-            const name = document.getElementById('editItemName').value.trim();
-            const cycle = parseInt(document.getElementById('editItemCycle').value);
-            const category = document.getElementById('editItemCategory').value;
-
-            if (!name || !cycle) {
-                alert('品名と仕入れ周期を入力してください');
-                return;
-            }
-
-            const itemIndex = items.findIndex(i => i.id === editingItemId);
-            if (itemIndex === -1) return;
-
-            // アイテムを更新
-            items[itemIndex].name = name;
-            items[itemIndex].cycle = cycle;
-            items[itemIndex].category = category;
-
-            // 購入履歴の商品名も更新
-            purchases.forEach(purchase => {
-                if (purchase.itemId === editingItemId) {
-                    purchase.itemName = name;
-                }
-            });
-
-            saveData();
-            loadData();
-            closeEditModal();
-            alert('日用品を更新しました');
-        }
-
-        // 購入が必要な商品数を取得
-        function getItemsNeedToBuy() {
-            const list = generateShoppingList();
-            return {
-                urgent: list.filter(item => item.daysLeft < 0).length,
-                soon: list.filter(item => item.daysLeft >= 0 && item.daysLeft <= 7).length
-            };
-        }
-
-        // 買い物リスト生成
-        function generateShoppingList() {
-            const list = [];
-
-            items.forEach(item => {
-                const latestPurchase = purchases
-                    .filter(p => p.itemId === item.id)
-                    .sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate))[0];
-
-                if (latestPurchase) {
-                    const daysLeft = getDaysDiff(latestPurchase.nextPurchaseDate);
-                    list.push({
-                        id: item.id,
-                        name: item.name,
-                        category: item.category,
-                        nextDate: latestPurchase.nextPurchaseDate,
-                        daysLeft: daysLeft
-                    });
-                } else {
-                    // 購入記録がない場合も表示
-                    list.push({
-                        id: item.id,
-                        name: item.name,
-                        category: item.category,
-                        nextDate: new Date().toISOString().split('T')[0],
-                        daysLeft: 0
-                    });
-                }
-            });
-
-            // 日数でソート
-            return list.sort((a, b) => a.daysLeft - b.daysLeft);
-        }
-
-        // 購入商品選択肢読み込み
-        function loadPurchaseSelect() {
-            const select = document.getElementById('purchaseItem');
-            select.innerHTML = '<option value="">商品を選択してください</option>' + 
-                items.map(item => `<option value="${item.id}">${item.name} (${item.category})</option>`).join('');
-        }
-
-        // 購入履歴表示
-        function loadHistory() {
-            const container = document.getElementById('historyList');
-            
-            if (purchases.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📋</div>
-                        <p>購入履歴がありません</p>
-                    </div>
-                `;
-                return;
-            }
-
-            const sortedPurchases = purchases.sort((a, b) => 
-                new Date(b.purchaseDate) - new Date(a.purchaseDate)
-            );
-
-            container.innerHTML = sortedPurchases.map(purchase => `
-                <div class="history-item">
-                    <div>
-                        <div style="font-weight: bold;">${purchase.itemName}</div>
-                        <div style="font-size: 12px; color: #6c757d;">
-                            購入日: ${formatDate(purchase.purchaseDate)} → 
-                            次回予定: ${formatDate(purchase.nextPurchaseDate)}
+                            <div style="font-size: 12px; color: #6c757d; margin-top: 3px;">
+                                次回購入予定: ${formatDate(item.nextDate)} (あと${item.daysLeft}日)
+                            </div>
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
+        }
+    }
+
+    // アイテム表示用ヘルパー関数
+    function renderItems(items, type) {
+        return items.map(item => {
+            let cardClass = 'card';
+            let badge = '';
+            let daysText = '';
+            
+            if (item.daysLeft < 0) {
+                cardClass = 'card danger';
+                badge = '<span class="badge badge-danger">期限切れ</span>';
+                daysText = `${Math.abs(item.daysLeft)}日経過`;
+            } else if (item.daysLeft === 0) {
+                cardClass = 'card danger';
+                badge = '<span class="badge badge-danger">今日</span>';
+                daysText = '今日が期限';
+            } else if (item.daysLeft <= 3) {
+                cardClass = 'card warning';
+                badge = '<span class="badge badge-warning">要注意</span>';
+                daysText = `あと${item.daysLeft}日`;
+            } else if (item.daysLeft <= 7) {
+                cardClass = 'card success';
+                badge = '<span class="badge badge-success">今週中</span>';
+                daysText = `あと${item.daysLeft}日`;
+            }
+
+            const storeBadgeClass = item.store === 'ドラッグストア' ? 'badge-store-drug' : 'badge-store-super';
+            const storeIcon = item.store === 'ドラッグストア' ? '💊' : '🛒';
+
+            return `
+                <div class="${cardClass}">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="item_${item.id}" onchange="toggleItemSelection(${item.id})" ${selectedItems.has(item.id) ? 'checked' : ''}>
+                        <label class="checkbox-label" for="item_${item.id}">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div style="flex: 1;">
+                                    <div style="font-weight: bold; font-size: 16px; margin-bottom: 5px; color: #6B4423;">
+                                        ${badge}
+                                        ${item.name}
+                                    </div>
+                                    <div style="font-size: 13px; color: #8B6F47;">
+                                        <span class="badge badge-info">${item.category}</span>
+                                        <span class="badge ${storeBadgeClass}">${storeIcon} ${item.store || 'スーパー'}</span>
+                                        ${formatDate(item.nextDate)} (${daysText})
+                                    </div>
+                                </div>
+                                <div style="text-align: right; font-size: 24px; font-weight: bold; color: ${
+                                    item.daysLeft < 0 ? '#E89B8A' : 
+                                    item.daysLeft === 0 ? '#E89B8A' :
+                                    item.daysLeft <= 3 ? '#F4C47E' : '#A8C99C'
+                                };">
+                                    ${item.daysLeft < 0 ? '!' : item.daysLeft}
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // アイテム選択切り替え
+    function toggleItemSelection(itemId) {
+        if (selectedItems.has(itemId)) {
+            selectedItems.delete(itemId);
+        } else {
+            selectedItems.add(itemId);
+        }
+        
+        // モーダルが開いている場合は更新
+        if (document.getElementById('shoppingListModal').style.display === 'block') {
+            updateSelectedItemsList();
+        }
+    }
+
+    // 買い物リストモーダルを開く
+    function openShoppingListModal() {
+        const allItems = generateShoppingList();
+        const weeklyItems = allItems.filter(item => item.daysLeft <= 7);
+        
+        if (weeklyItems.length === 0) {
+            alert('今週購入が必要な商品がありません');
+            return;
         }
 
-        // データ統計表示
-        function loadDataStats() {
-            const container = document.getElementById('dataStats');
+        // デフォルトで全アイテムを選択
+        selectedItems.clear();
+        weeklyItems.forEach(item => selectedItems.add(item.id));
+        
+        // 日付を設定
+        const today = new Date();
+        document.getElementById('modalDate').textContent = 
+            `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日`;
+        
+        // アイテムリストを生成
+        updateSelectedItemsList();
+        
+        // モーダル表示
+        document.getElementById('shoppingListModal').style.display = 'block';
+    }
+
+    // 選択されたアイテムリストを更新
+    function updateSelectedItemsList() {
+        const container = document.getElementById('selectedItemsList');
+        const allItems = generateShoppingList();
+        const selected = allItems.filter(item => selectedItems.has(item.id));
+        
+        if (selected.length === 0) {
             container.innerHTML = `
-                <div style="line-height: 1.8;">
-                    <p>📦 登録商品数: <strong>${items.length}</strong> 件</p>
-                    <p>🛍️ 購入記録数: <strong>${purchases.length}</strong> 件</p>
-                    <p>📅 最終更新: <strong>${new Date().toLocaleString('ja-JP')}</strong></p>
+                <div class="empty-state">
+                    <div class="empty-state-icon">📝</div>
+                    <p>ダッシュボードで商品を選択してください</p>
+                </div>
+            `;
+            return;
+        }
+
+        // カテゴリ別にグループ化
+        const byCategory = {};
+        selected.forEach(item => {
+            if (!byCategory[item.category]) {
+                byCategory[item.category] = [];
+            }
+            byCategory[item.category].push(item);
+        });
+
+        let html = '';
+        for (const [category, categoryItems] of Object.entries(byCategory)) {
+            html += `
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: #8B6F47; margin-bottom: 10px; font-size: 16px;">
+                        📂 ${category} (${categoryItems.length}件)
+                    </h4>
+                    ${categoryItems.map(item => {
+                        const storeBadgeClass = item.store === 'ドラッグストア' ? 'badge-store-drug' : 'badge-store-super';
+                        const storeIcon = item.store === 'ドラッグストア' ? '💊' : '🛒';
+                        
+                        return `
+                        <div class="screenshot-item">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: bold; font-size: 15px; color: #6B4423; margin-bottom: 3px;">
+                                        ✓ ${item.name}
+                                    </div>
+                                    <div style="font-size: 12px; color: #8B6F47;">
+                                        <span class="badge ${storeBadgeClass}">${storeIcon} ${item.store}</span>
+                                        次回予定: ${formatDate(item.nextDate)}
+                                        ${item.daysLeft < 0 ? `(${Math.abs(item.daysLeft)}日経過)` : 
+                                          item.daysLeft === 0 ? '(今日)' : 
+                                          `(あと${item.daysLeft}日)`}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `}).join('')}
                 </div>
             `;
         }
 
-        // データエクスポート
-        function exportData() {
-            const data = {
-                items: items,
-                purchases: purchases,
-                exportDate: new Date().toISOString()
-            };
+        container.innerHTML = html;
+    }
 
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `shopping-data-${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
+    // モーダルを閉じる
+    function closeShoppingListModal() {
+        document.getElementById('shoppingListModal').style.display = 'none';
+    }
+
+    // スクショ保存（html2canvasを使わずにシンプルに印刷ダイアログを開く）
+    function captureScreenshot() {
+        alert('📸 スクリーンショット機能\n\nスマホの場合:\n1. このモーダル全体をスクリーンショット\n2. ギャラリーから切り取り\n\nPCの場合:\n「印刷」ボタンでPDF保存できます');
+    }
+
+    // 買い物リスト印刷
+    function printShoppingList() {
+        window.print();
+    }
+
+    // モーダル外クリックで閉じる
+    window.onclick = function(event) {
+        const modal = document.getElementById('shoppingListModal');
+        if (event.target == modal) {
+            closeShoppingListModal();
+        }
+        const editModal = document.getElementById('editItemModal');
+        if (event.target == editModal) {
+            closeEditModal();
+        }
+    }
+
+    // 編集モーダルを開く
+    function openEditModal(itemId) {
+        const item = items.find(i => i.id === itemId);
+        if (!item) return;
+
+        editingItemId = itemId;
+        document.getElementById('editItemName').value = item.name;
+        document.getElementById('editItemCycle').value = item.cycle;
+        document.getElementById('editItemCategory').value = item.category;
+        document.getElementById('editItemStore').value = item.store || 'スーパー';
+
+        document.getElementById('editItemModal').style.display = 'block';
+    }
+
+    // 編集モーダルを閉じる
+    function closeEditModal() {
+        document.getElementById('editItemModal').style.display = 'none';
+        editingItemId = null;
+    }
+
+    // 編集を保存
+    function saveEditedItem() {
+        const name = document.getElementById('editItemName').value.trim();
+        const cycle = parseInt(document.getElementById('editItemCycle').value);
+        const category = document.getElementById('editItemCategory').value;
+        const store = document.getElementById('editItemStore').value;
+
+        if (!name || !cycle) {
+            alert('品名と仕入れ周期を入力してください');
+            return;
         }
 
-        // データインポート
-        function importData() {
-            const file = document.getElementById('importFile').files[0];
-            if (!file) {
-                alert('ファイルを選択してください');
-                return;
+        const itemIndex = items.findIndex(i => i.id === editingItemId);
+        if (itemIndex === -1) return;
+
+        // アイテムを更新
+        items[itemIndex].name = name;
+        items[itemIndex].cycle = cycle;
+        items[itemIndex].category = category;
+        items[itemIndex].store = store;
+
+        // 購入履歴の商品名も更新
+        purchases.forEach(purchase => {
+            if (purchase.itemId === editingItemId) {
+                purchase.itemName = name;
             }
+        });
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    if (confirm('現在のデータを上書きしますか？')) {
-                        items = data.items || [];
-                        purchases = data.purchases || [];
-                        saveData();
-                        loadData();
-                        alert('データをインポートしました');
-                    }
-                } catch (error) {
-                    alert('ファイルの読み込みに失敗しました');
+        saveData();
+        loadData();
+        closeEditModal();
+        alert('日用品を更新しました');
+    }
+
+    // 購入が必要な商品数を取得
+    function getItemsNeedToBuy() {
+        const list = generateShoppingList();
+        return {
+            urgent: list.filter(item => item.daysLeft < 0).length,
+            soon: list.filter(item => item.daysLeft >= 0 && item.daysLeft <= 7).length
+        };
+    }
+
+    // 買い物リスト生成
+    function generateShoppingList() {
+        const list = [];
+
+        items.forEach(item => {
+            const latestPurchase = purchases
+                .filter(p => p.itemId === item.id)
+                .sort((a, b) => new Date(b.purchaseDate) - new Date(a.purchaseDate))[0];
+
+            if (latestPurchase) {
+                const daysLeft = getDaysDiff(latestPurchase.nextPurchaseDate);
+                list.push({
+                    id: item.id,
+                    name: item.name,
+                    category: item.category,
+                    store: item.store || 'スーパー',
+                    nextDate: latestPurchase.nextPurchaseDate,
+                    daysLeft: daysLeft
+                });
+            } else {
+                // 購入記録がない場合も表示
+                list.push({
+                    id: item.id,
+                    name: item.name,
+                    category: item.category,
+                    store: item.store || 'スーパー',
+                    nextDate: new Date().toISOString().split('T')[0],
+                    daysLeft: 0
+                });
+            }
+        });
+
+        // 日数でソート
+        return list.sort((a, b) => a.daysLeft - b.daysLeft);
+    }
+
+    // 購入商品選択肢読み込み
+    function loadPurchaseSelect() {
+        const select = document.getElementById('purchaseItem');
+        select.innerHTML = '<option value="">商品を選択してください</option>' + 
+            items.map(item => `<option value="${item.id}">${item.name} (${item.category})</option>`).join('');
+    }
+
+    // 購入履歴表示
+    function loadHistory() {
+        const container = document.getElementById('historyList');
+        
+        if (purchases.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📋</div>
+                    <p>購入履歴がありません</p>
+                </div>
+            `;
+            return;
+        }
+
+        const sortedPurchases = purchases.sort((a, b) => 
+            new Date(b.purchaseDate) - new Date(a.purchaseDate)
+        );
+
+        container.innerHTML = sortedPurchases.map(purchase => `
+            <div class="history-item">
+                <div>
+                    <div style="font-weight: bold;">${purchase.itemName}</div>
+                    <div style="font-size: 12px; color: #6c757d;">
+                        購入日: ${formatDate(purchase.purchaseDate)} → 
+                        次回予定: ${formatDate(purchase.nextPurchaseDate)}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // データ統計表示
+    function loadDataStats() {
+        const container = document.getElementById('dataStats');
+        container.innerHTML = `
+            <div style="line-height: 1.8;">
+                <p>📦 登録商品数: <strong>${items.length}</strong> 件</p>
+                <p>🛍️ 購入記録数: <strong>${purchases.length}</strong> 件</p>
+                <p>📅 最終更新: <strong>${new Date().toLocaleString('ja-JP')}</strong></p>
+            </div>
+        `;
+    }
+
+    // データエクスポート
+    function exportData() {
+        const data = {
+            items: items,
+            purchases: purchases,
+            exportDate: new Date().toISOString()
+        };
+
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `shopping-data-${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    // データインポート
+    function importData() {
+        const file = document.getElementById('importFile').files[0];
+        if (!file) {
+            alert('ファイルを選択してください');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const data = JSON.parse(e.target.result);
+                if (confirm('現在のデータを上書きしますか？')) {
+                    items = data.items || [];
+                    purchases = data.purchases || [];
+                    saveData();
+                    loadData();
+                    alert('データをインポートしました');
                 }
-            };
-            reader.readAsText(file);
-        }
+            } catch (error) {
+                alert('ファイルの読み込みに失敗しました');
+            }
+        };
+        reader.readAsText(file);
+    }
 
-        // 全データ削除
-        function clearAllData() {
-            if (!confirm('本当に全データを削除しますか？この操作は取り消せません。')) return;
-            if (!confirm('最終確認：全データを削除します。よろしいですか？')) return;
+    // 全データ削除
+    function clearAllData() {
+        if (!confirm('本当に全データを削除しますか？この操作は取り消せません。')) return;
+        if (!confirm('最終確認：全データを削除します。よろしいですか？')) return;
 
-            items = [];
-            purchases = [];
-            saveData();
-            loadData();
-            alert('全データを削除しました');
-        }
+        items = [];
+        purchases = [];
+        saveData();
+        loadData();
+        alert('全データを削除しました');
+    }
 
-        // 印刷
-        function printData() {
-            window.print();
-        }
-    </script>
+    // 印刷
+    function printData() {
+        window.print();
+    }
+</script>
+```
+
 </body>
 </html>
