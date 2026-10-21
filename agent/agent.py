@@ -126,24 +126,33 @@ TOOLS = [
 ]
 
 
-def print_reply(message) -> None:
+def print_reply(message, speaker: str = "🤖") -> None:
     for block in message.content:
         if block.type == "text" and block.text.strip():
-            print(f"\n🤖 {block.text}")
+            print(f"\n{speaker} {block.text}")
         elif block.type == "tool_use":
             print(f"   🔧 {block.name} を使用中...")
         elif block.type == "server_tool_use":
             print(f"   🌐 {block.name} を使用中...")
 
 
-def run_turn(client: anthropic.Anthropic, messages: list) -> None:
-    """1回の依頼を、Claude がツールを使い終わるまで実行する。messages は会話履歴として更新される。"""
+def run_turn(
+    client: anthropic.Anthropic,
+    messages: list,
+    system: str = SYSTEM_PROMPT,
+    tools: list = TOOLS,
+    speaker: str = "🤖",
+) -> str:
+    """1回の依頼を、Claude がツールを使い終わるまで実行する。messages は会話履歴として更新される。
+
+    戻り値は最後の回答のテキスト。
+    """
     for _ in range(5):  # pause_turn（長いWeb検索の一時停止）からの再開は5回まで
         runner = client.beta.messages.tool_runner(
             model=MODEL,
             max_tokens=16000,
-            system=SYSTEM_PROMPT,
-            tools=TOOLS,
+            system=system,
+            tools=tools,
             messages=messages,
             output_config={"effort": "high"},
             # 安全フィルタで断られたときに、自動で別モデルに切り替えて回答させる
@@ -153,7 +162,7 @@ def run_turn(client: anthropic.Anthropic, messages: list) -> None:
         last = None
         for message in runner:
             last = message
-            print_reply(message)
+            print_reply(message, speaker)
             messages.append({"role": "assistant", "content": message.content})
             tool_response = runner.generate_tool_call_response()
             if tool_response is not None:
@@ -161,10 +170,14 @@ def run_turn(client: anthropic.Anthropic, messages: list) -> None:
 
         if last is None or last.stop_reason != "pause_turn":
             if last is not None and last.stop_reason == "refusal":
-                print("\n🤖 （この依頼には対応できませんでした）")
-            elif last is not None and last.stop_reason == "max_tokens":
-                print("\n🤖 （回答が長すぎて途中で切れました。「続けて」と送ってください）")
-            return
+                print(f"\n{speaker} （この依頼には対応できませんでした）")
+                return "（この依頼には対応できませんでした）"
+            if last is not None and last.stop_reason == "max_tokens":
+                print(f"\n{speaker} （回答が長すぎて途中で切れました。「続けて」と送ってください）")
+            if last is None:
+                return ""
+            return "\n".join(b.text for b in last.content if b.type == "text")
+    return "（Web検索が長引いたため途中で止まりました）"
 
 
 def main() -> None:
