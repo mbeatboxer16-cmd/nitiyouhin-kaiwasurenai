@@ -19,7 +19,10 @@ from pathlib import Path
 import anthropic
 from anthropic import beta_tool
 
-MODEL = "claude-opus-5-5"
+# 使うAIモデル。
+#   "claude-haiku-5-5" … 最安（Opusの約1/40）。普段使いはこれで十分
+#   "claude-opus-5-5"  … 最高性能。難しい仕事で品質が足りないときに
+MODEL = "claude-haiku-5-5"
 WORKSPACE = Path(sys.argv[1] if len(sys.argv) > 1 else "workspace").resolve()
 
 SYSTEM_PROMPT = f"""あなたはユーザーのWindows PC上で作業を代行するAIエージェントです。
@@ -120,10 +123,23 @@ TOOLS = [
     read_file,
     write_file,
     run_command,
-    # サーバー側ツール（Anthropic 側で実行されるので実装は不要）
-    {"type": "web_search_20260209", "name": "web_search", "max_uses": 5},
-    {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 5},
 ]
+
+
+def web_tools(model: str) -> list:
+    """Web検索・Web取得ツール（Anthropic 側で実行されるので実装は不要）。モデルに合う版を選ぶ。"""
+    if "haiku" in model:
+        return [
+            {"type": "web_search_20250305", "name": "web_search", "max_uses": 5},
+            {"type": "web_fetch_20250910", "name": "web_fetch", "max_uses": 5},
+        ]
+    return [
+        {"type": "web_search_20260209", "name": "web_search", "max_uses": 5},
+        {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 5},
+    ]
+
+
+TOOLS += web_tools(MODEL)
 
 
 def print_reply(message, speaker: str = "🤖") -> None:
@@ -142,22 +158,25 @@ def run_turn(
     system: str = SYSTEM_PROMPT,
     tools: list = TOOLS,
     speaker: str = "🤖",
+    model: str = MODEL,
 ) -> str:
     """1回の依頼を、Claude がツールを使い終わるまで実行する。messages は会話履歴として更新される。
 
     戻り値は最後の回答のテキスト。
     """
+    extra = {}
+    if "haiku" not in model:
+        # 安全フィルタで断られたときに、自動で別モデルに切り替えて回答させる（Haiku は非対応）
+        extra = {"betas": ["server-side-fallback-2026-07-01"], "fallbacks": "default"}
     for _ in range(5):  # pause_turn（長いWeb検索の一時停止）からの再開は5回まで
         runner = client.beta.messages.tool_runner(
-            model=MODEL,
+            model=model,
             max_tokens=16000,
             system=system,
             tools=tools,
             messages=messages,
             output_config={"effort": "high"},
-            # 安全フィルタで断られたときに、自動で別モデルに切り替えて回答させる
-            betas=["server-side-fallback-2026-07-01"],
-            fallbacks="default",
+            **extra,
         )
         last = None
         for message in runner:

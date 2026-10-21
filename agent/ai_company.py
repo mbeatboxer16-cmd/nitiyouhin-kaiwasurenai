@@ -23,7 +23,12 @@
 import anthropic
 from anthropic import beta_tool
 
-from agent import WORKSPACE, list_files, read_file, run_command, run_turn, write_file
+from agent import WORKSPACE, list_files, read_file, run_command, run_turn, web_tools, write_file
+
+# 使うAIモデル。"claude-haiku-5-5" が最安、"claude-opus-5-5" が最高性能。
+# 品質が足りないときは、まず部長だけ Opus にすると費用を抑えつつ仕事の段取りが良くなる
+LEADER_MODEL = "claude-haiku-5-5"
+EMPLOYEE_MODEL = "claude-haiku-5-5"
 
 COMPANY_FILE = WORKSPACE / "会社情報.md"
 COMPANY_TEMPLATE = """# 会社情報
@@ -40,8 +45,7 @@ COMPANY_TEMPLATE = """# 会社情報
 - 成果物は「成果物」フォルダに保存する
 """
 
-WEB_SEARCH = {"type": "web_search_20260209", "name": "web_search", "max_uses": 5}
-WEB_FETCH = {"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": 5}
+WEB_SEARCH, WEB_FETCH = web_tools(EMPLOYEE_MODEL)
 
 EMPLOYEES = {
     "事務担当": {
@@ -130,7 +134,9 @@ def assign_task(employee: str, task: str) -> str:
     checkpoint = len(history)
     history.append({"role": "user", "content": task})
     try:
-        report = run_turn(client, history, employee_prompt(employee), e["tools"], f"{e['icon']} {employee}:")
+        report = run_turn(
+            client, history, employee_prompt(employee), e["tools"], f"{e['icon']} {employee}:", EMPLOYEE_MODEL
+        )
     except anthropic.APIError as err:
         del history[checkpoint:]
         return f"エラー: {employee}の作業中に問題が起きました（{err}）"
@@ -169,7 +175,7 @@ def main() -> None:
         checkpoint = len(messages)  # エラー時はこの指示の前まで会話を巻き戻す
         messages.append({"role": "user", "content": user_input})
         try:
-            run_turn(client, messages, LEADER_PROMPT, LEADER_TOOLS, "👔 AI部長:")
+            run_turn(client, messages, LEADER_PROMPT, LEADER_TOOLS, "👔 AI部長:", LEADER_MODEL)
         except anthropic.AuthenticationError:
             print("❌ APIキーが正しくありません。ANTHROPIC_API_KEY を確認してください。")
             del messages[checkpoint:]
